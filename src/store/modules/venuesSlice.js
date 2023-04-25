@@ -25,6 +25,7 @@ export const fetchVenues = () => async (dispatch) => {
     try {
         const response = await fetch('https://nf-api.onrender.com/api/v1/holidaze/venues')
         const data = await response.json()
+        console.log(data);
         dispatch(SET_VENUES(data))
     } catch(e) {
         console.log(e);

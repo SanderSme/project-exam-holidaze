@@ -1,6 +1,8 @@
 import { Route, Routes } from "react-router-dom"
 import HomePage from "../components/views/HomePage"
 import SingleVenue from "../components/views/SingleVenue"
+import Register from "../components/views/Register"
+import Login from "../components/views/Login"
 
 const Router = () => {
   return (
@@ -8,6 +10,10 @@ const Router = () => {
         <Routes>
             <Route path="/" element={<HomePage/>}/>
             <Route path="/venue/:id" element={<SingleVenue/>}/>
+            <Route path="/profile" element={<SingleVenue/>}/>
+            <Route path="/create-venue" element={<SingleVenue/>}/>
+            <Route path="/register" element={<Register/>}/>
+            <Route path="/login" element={<Login/>}/>
         </Routes>
     </>
   )

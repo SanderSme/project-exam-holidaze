@@ -1,9 +1,11 @@
 import HeroBanner from './HeroBanner'
 import VenueCards from './VenueCards'
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchVenues } from '../../store/modules/venuesSlice'
 import { Link } from "react-router-dom"
+import { faFilter } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const HomePage = () => {
     const dispatch = useDispatch()
@@ -17,7 +19,7 @@ const HomePage = () => {
         <div className='max-w-7xl w-11/12 mx-auto'>
             <div className='flex justify-between items-center'>
                 <h1 className='text-2xl mt-4'>Venues</h1>
-                <button className='px-8 h-[30px] rounded bg-[#125C85] text-white'>Filter</button>
+                <button className='px-4 h-[30px] rounded bg-[#125C85] text-white'><FontAwesomeIcon icon={faFilter}/> Filter</button>
             </div>
             <div className='w-full h-[1px] bg-gray-400 mb-8'>
             </div>

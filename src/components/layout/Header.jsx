@@ -5,10 +5,11 @@ import { faBars } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './NavBarAnimation.css'
 import SearchBar from '../SearchBar'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { fetchVenues } from '../../store/modules/venuesSlice'
 import { useState, useEffect} from 'react'
 import SearchResults from '../SearchResultList'
+import { NavLink } from 'react-router-dom'
 
 const Header = () => {
     function displayNavBar() {
@@ -20,11 +21,24 @@ const Header = () => {
         document.querySelector('body').classList.toggle("overflow-hidden")
       }
     const dispatch = useDispatch()
-    const {venues} = useSelector(state => state.venues)
     useEffect(() => {
         dispatch(fetchVenues())
     }, [dispatch])
       const [results, setResults] = useState([])
+
+      const accessToken = localStorage.getItem('accessToken')
+      const userName = localStorage.getItem('userName')
+      const avatar = localStorage.getItem('avatar')
+      let firstChar
+      if(userName) {
+          firstChar = userName['0'].toUpperCase()
+      }
+      let userAvatar
+      if(avatar) {
+          userAvatar = <img src={avatar} alt="avatar" className="w-full h-full object-cover rounded-full"/>
+      } else {
+          userAvatar = firstChar
+      }
   return (
     <div className="w-full h-28 bg-[#125C85]">
         <div className="max-w-7xl w-11/12 h-full mx-auto flex flex-col justify-between">
@@ -36,10 +50,16 @@ const Header = () => {
                 <div className='flex items-center gap-2'>
                 <SearchBar setResults={setResults}/>
                 <SearchResults results={results}/>
-                    <div className='h-[40px] w-[40px] rounded-full bg-[#FFC107] flex justify-center items-center font-semibold text-xl border border-black'>
-                        S
-                    </div>
-                    <p className='text-white text-lg hidden md:flex'>SanderSme</p>
+                {accessToken ? (
+              <NavLink to={"/profile"} className="flex items-center gap-2">
+                <div className='h-[40px] w-[40px] rounded-full bg-[#FFC107] flex justify-center items-center font-semibold text-xl border border-black'>
+                  {userAvatar}
+                </div>
+                <p className='text-white text-lg hidden md:flex'>{userName}</p>
+              </NavLink>
+            ) : (
+              <><NavLink to={"/login"} className="text-white text-lg hidden md:flex">Sign in</NavLink><span className='text-white hidden md:flex'>/</span><NavLink to={'/register'} className="text-white text-lg hidden md:flex">Register</NavLink></>
+            )}
                 </div>
             </div>
             <HeaderDesktopNavBar/>

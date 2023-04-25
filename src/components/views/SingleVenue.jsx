@@ -52,14 +52,14 @@ const SingleVenue = () => {
             ))}
             </Slider>
             <div className='flex justify-between items-center'>
-                <h1 className='text-2xl mt-4'>{singleVenue.name}</h1>
+                <h1 className='text-2xl mt-12'>{singleVenue.name}</h1>
             </div>
             <div className='w-full h-[1px] bg-gray-300 mb-8'></div>
-            <div className='flex w-full gap-12 justify-between'>
-                <p className='w-2/3'>{singleVenue.description}</p>
-                <div className='w-1/5'>
+            <div className='flex flex-col-reverse md:flex-row w-full justify-between'>
+                <p className='w-full md:w-2/3'>{singleVenue.description}</p>
+                <div className='w-full md:ml-8 lg:ml-0 md:w-2/5 lg:w-1/5'>
                     <h2 className='font-semibold mb-4'>Property information</h2>
-                    <div className='flex justify-between w-full'>
+                    <div className='flex justify-between w-2/3 md:w-full'>
                         <div>
                             <p className='font-semibold'>Price:</p>
                             <p>${singleVenue.price} / night</p>
@@ -71,7 +71,7 @@ const SingleVenue = () => {
                     </div>
                     <div className='mt-8'>
                         <p className='font-semibold mb-4'>Facilities:</p>
-                        <div className='flex flex-wrap gap-x-20 gap-y-8'>
+                        <div className='flex flex-wrap gap-x-20 gap-y-8 mb-8'>
                             {singleVenue.meta.wifi === true ? <div className='flex gap-2 items-center'>
                                 <FontAwesomeIcon icon={faWifi}/>
                                 <p>Wifi</p>
