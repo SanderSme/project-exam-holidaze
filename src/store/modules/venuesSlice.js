@@ -4,11 +4,37 @@ const venuesSlice = createSlice({
     name: 'venues',
     initialState: {
         venues: [],
-        singleVenue: null
+        singleVenue: null,
+        cheapestHouses:[],
+        topRatedHouses:[]
     },
     reducers: {
         SET_VENUES: (state, action) => {
-            state.venues = action.payload
+            state.venues = action.payload;
+            let lowestPrice = Infinity;
+            let cheapestHouses = [];
+            for (let i = 0; i < action.payload.length; i++) {
+                const house = action.payload[i];
+                if (house.price < lowestPrice) {
+                    lowestPrice = house.price;
+                    cheapestHouses = [house];
+                } else if (house.price === lowestPrice) {
+                    cheapestHouses.push(house);
+                }
+            }
+            state.cheapestHouses = cheapestHouses;
+            let highestScore = -Infinity;
+            let topRatedHouses = [];
+            for(let i = 0; i < action.payload.length; i++) {
+                const house = action.payload[i];
+                if(house.rating > highestScore) {
+                    highestScore = house.rating;
+                    topRatedHouses = [house];
+                } else if (house.rating === highestScore) {
+                    topRatedHouses.push(house)
+                }
+            }
+            state.topRatedHouses = topRatedHouses;
         },
         SET_SINGLE_VENUE: (state, action) => {
             state.singleVenue = action.payload

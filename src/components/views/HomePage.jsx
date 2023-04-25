@@ -1,15 +1,16 @@
 import HeroBanner from './HeroBanner'
-import VenueCards from './VenueCards'
+import VenueCards from '../VenueCards'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchVenues } from '../../store/modules/venuesSlice'
 import { Link } from "react-router-dom"
 import { faFilter } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { LowestPrice, BestRated } from '../Stickers'
 
 const HomePage = () => {
     const dispatch = useDispatch()
-    const {venues} = useSelector(state => state.venues)
+    const {venues, cheapestHouses, topRatedHouses} = useSelector(state => state.venues)
     useEffect(() => {
         dispatch(fetchVenues())
     }, [dispatch])
@@ -23,11 +24,11 @@ const HomePage = () => {
             </div>
             <div className='w-full h-[1px] bg-gray-400 mb-8'>
             </div>
-            <div className='flex flex-wrap justify-center md:justify-around xl:justify-between md:gap-4'>
+            <div className='flex flex-wrap justify-center md:justify-around md:gap-1'>
                 {venues.map((venue) => (
                     <div key={venue.id}>
                         <Link to={`/venue/${venue.id}`}>
-                        <VenueCards media={venue.media[0]} name={venue.name} price={venue.price}/>
+                        <VenueCards media={venue.media[0]} name={venue.name} price={venue.price} location={venue.location.city} sticker={cheapestHouses && cheapestHouses.find(house => house.id === venue.id) ? <LowestPrice /> : null} sticker2={topRatedHouses && topRatedHouses.find(house => house.id === venue.id) ? <BestRated /> : null}/>
                         </Link>
                     </div>
                 ))}
