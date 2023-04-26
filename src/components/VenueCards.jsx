@@ -1,4 +1,4 @@
-
+import StarRating from "./StarRating"
 
 const VenueCards = (props) => {
   return (
@@ -16,7 +16,7 @@ const VenueCards = (props) => {
                 {props.location ? <p className="text-sm">{props.location}</p> : null}
                 <p className='font-semibold'>{props.name}</p>  
             </div>
-            <p className='italic text-gray-500'>No reviews</p>
+            {props.rating > 0 ? <StarRating rating={props.rating}/> : <p className='italic text-gray-500'>No reviews</p>}
         </div>
     </div>
   )

@@ -51,7 +51,7 @@ const SingleVenue = () => {
             </div>
             ))}
             </Slider>
-            <div className='flex justify-between items-center'>
+            <div>
                 <h1 className='text-2xl mt-12'>{singleVenue.name}</h1>
             </div>
             <div className='w-full h-[1px] bg-gray-300 mb-8'></div>
