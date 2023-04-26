@@ -29,8 +29,8 @@ const VenueForm = () => {
             name: "",
             description: "",
             media: [],
-            price: 0,
-            maxGuests: 0,
+            price: 1,
+            maxGuests: 1,
             rating: 5,
             meta: {
                 wifi: false,
