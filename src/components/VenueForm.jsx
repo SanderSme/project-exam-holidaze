@@ -8,22 +8,20 @@ const accessToken = localStorage.getItem("accessToken")
 
 const validationSchema = Yup.object().shape({
     name: Yup.string().min(6, "Must be 6 chars or more").max(50, "Can not be longer than 50 chars").required('Required'),
-    description: Yup.string().min(6, "Must be 6 chars or more").max(50, "Can not be longer than 50 chars").required('Required'),
+    description: Yup.string().min(6, "Must be 6 chars or more").max(250, "Can not be longer than 50 chars").required('Required'),
     media: Yup.string()
     .url('Invalid URL')
     .matches(/\.(gif|jpe?g|png)$/i, 'Invalid image URL'),
     price: Yup.number().required('Required'),
     maxGuests: Yup.number().required('Required'),
+    address: Yup.string().min(2, "Must be 6 chars or more").max(50, "Can not be longer than 50 chars").required('Required'),
+    continent: Yup.string().min(2, "Must be 6 chars or more").max(50, "Can not be longer than 50 chars").required('Required'),
+    country: Yup.string().min(2, "Must be 6 chars or more").max(50, "Can not be longer than 50 chars").required('Required'),
+    city: Yup.string().min(2, "Must be 6 chars or more").max(50, "Can not be longer than 50 chars").required('Required'),
+    zip: Yup.number().required('Required'),
 })
 
 const VenueForm = () => {
-    const [imgUrlCount, setImgUrlCount] = useState(1);
-
-    const handleAddImgUrl = (e) => {
-        e.preventDefault()
-      setImgUrlCount(imgUrlCount + 1);
-    };
-
     const formik = useFormik({
         initialValues:{
             name: "",
@@ -39,11 +37,11 @@ const VenueForm = () => {
                 pets: false
             },
             location: {
-                address: "Unknown",
-                city: "Unknown",
-                zip: "Unknown",
-                country: "Unknown",
-                continent: "Unknown",
+                address: "",
+                city: "",
+                zip: "",
+                country: "",
+                continent: "",
                 lat: 0,
                 lng: 0
               }
@@ -64,11 +62,11 @@ const VenueForm = () => {
                     pets: values.pets
                 },
                 location: {
-                    address: "Unknown",
-                    city: "Unknown",
-                    zip: "Unknown",
-                    country: "Unknown",
-                    continent: "Unknown",
+                    address: values.address,
+                    city: values.city,
+                    zip: values.zip,
+                    country: values.country,
+                    continent: values.continent,
                     lat: 0,
                     lng: 0
                   }
@@ -116,18 +114,12 @@ const VenueForm = () => {
             </div>
             <div className="flex flex-col items-start">
                 <label htmlFor="gallery" className='mb-[-16px]'>Gallery</label>
-                {Array.from({ length: imgUrlCount }, (_, i) => (
-                  <div className="w-full flex gap-4 mt-4" id={`imgUrl${i}`} key={i}>
-                      <input type="text" name='media' id={`title${i}`} className="border-2 border-[#125C85] rounded w-full p-1" onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.media}/>
-                      <button onClick={(e) => {
-                        e.preventDefault();
-                        e.target.parentElement.remove();
-                        }}><FontAwesomeIcon icon={faTrash}/></button>
-                  </div>
-                ))}
-                <button className="w-12 h-12 rounded-full border-2 border-[#125C85] text-3xl mt-4 font-bold" onClick={handleAddImgUrl}>+</button>
+                    <div className="w-full flex gap-4 mt-4">
+                        <input type="text" name='media' className="border-2 border-[#125C85] rounded w-full p-1" onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}/>
+                        <button type='button'><FontAwesomeIcon icon={faTrash}/></button>
+                    </div>
+                <button type='button' className="w-12 h-12 rounded-full border-2 border-[#125C85] text-3xl mt-4 font-bold">+</button>
             </div>
             <div className="flex justify-between">
                 <div className="flex flex-col w-2/5">
@@ -170,6 +162,47 @@ const VenueForm = () => {
                         value={formik.values.parking}/>
                     <label htmlFor="parking" className="ml-2">Parking</label>
                 </div>
+            </div>
+            <div className='p-2 bg-gray-100 rounded flex flex-col gap-4'>
+            <div className="flex flex-col">
+                <label htmlFor="address">Address</label>
+                <input type="text" name='address' id="address" className="border-2 border-[#125C85] rounded p-1" onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.address}/>
+                        {formik.touched.address && formik.errors.address ? <div className='text-red-600'>{formik.errors.address}</div> : null}
+            </div>
+            <div className="flex justify-between">
+                <div className="flex flex-col w-2/5">
+                    <label htmlFor="city">City</label>
+                    <input type="text" name='city' id="city" className="border-2 border-[#125C85] rounded p-1" onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.city}/>
+                        {formik.touched.city && formik.errors.city ? <div className='text-red-600'>{formik.errors.city}</div> : null}
+                </div>
+                <div className="flex flex-col w-2/5">
+                    <label htmlFor="zip">Zip-code</label>
+                    <input type="text" name='zip' id="zip" className="border-2 border-[#125C85] rounded p-1" onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.zip}/>
+                        {formik.touched.zip && formik.errors.zip ? <div className='text-red-600'>{formik.errors.zip}</div> : null}
+                </div>
+            </div>
+            <div className="flex justify-between">
+                <div className="flex flex-col w-2/5">
+                    <label htmlFor="country">Country</label>
+                    <input type="text" name='country' id="country" className="border-2 border-[#125C85] rounded p-1" onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.country}/>
+                        {formik.touched.country && formik.errors.country ? <div className='text-red-600'>{formik.errors.country}</div> : null}
+                </div>
+                <div className="flex flex-col w-2/5">
+                    <label htmlFor="continent">Continent</label>
+                    <input type="text" name='continent' id="continent" className="border-2 border-[#125C85] rounded p-1" onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.continent}/>
+                        {formik.touched.continent && formik.errors.continent ? <div className='text-red-600'>{formik.errors.continent}</div> : null}
+                </div>
+            </div>
             </div>
             <button type="submit" className="bg-[#FFC107] w-full md:w-1/2 lg:w-1/3 py-1 rounded shadow place-self-end text-black mt-4 mb-8">Publish</button>
         </form>

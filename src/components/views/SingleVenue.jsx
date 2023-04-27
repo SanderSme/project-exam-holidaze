@@ -46,7 +46,7 @@ const SingleVenue = () => {
             </div>
             <Slider {...settings}>
             {singleVenue.media.map((media) => (
-            <div key={media.index} className='h-[350px] w-full mt-2 rounded'>
+            <div key={media} className='h-[350px] w-full mt-2 rounded'>
                 <img src={media} alt="venue" className='h-full mx-auto rounded'/>
             </div>
             ))}
