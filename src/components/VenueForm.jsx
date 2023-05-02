@@ -1,8 +1,11 @@
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik"
 import * as Yup from 'yup'
+import { newVenue } from '../store/modules/venuesSlice'
+
 
 const accessToken = localStorage.getItem("accessToken")
 
@@ -18,10 +21,11 @@ const validationSchema = Yup.object().shape({
     continent: Yup.string().min(2, "Must be 6 chars or more").max(50, "Can not be longer than 50 chars").required('Required'),
     country: Yup.string().min(2, "Must be 6 chars or more").max(50, "Can not be longer than 50 chars").required('Required'),
     city: Yup.string().min(2, "Must be 6 chars or more").max(50, "Can not be longer than 50 chars").required('Required'),
-    zip: Yup.number().required('Required'),
+    zip: Yup.string().required('Required'),
 })
 
 const VenueForm = () => {
+    const dispatch = useDispatch()
     const formik = useFormik({
         initialValues:{
             name: "",
@@ -37,11 +41,11 @@ const VenueForm = () => {
                 pets: false
             },
             location: {
-                address: "",
-                city: "",
-                zip: "",
-                country: "",
-                continent: "",
+                address: "unknown",
+                city: "unknown",
+                zip: "unknown",
+                country: "unknown",
+                continent: "unknown",
                 lat: 0,
                 lng: 0
               }
@@ -72,29 +76,9 @@ const VenueForm = () => {
                   }
               };
               console.log(venueData);
-              fetch('https://nf-api.onrender.com/api/v1/holidaze/venues', {
-                  method: 'POST',
-                  headers: {
-                      'Content-Type': 'application/json',
-                      'Authorization': `Bearer ${accessToken}`
-                  },
-                  body: JSON.stringify(venueData)
-              })
-              .then(response => {
-                  if(!response.ok) {
-                      throw new Error(response.statusText)
-                  }
-                  return response.json()
-              })
-              .then(data => {
-                  console.log(data);
-                window.location.href = '/';
-              })
-              .catch(error => {
-                  console.error(error)
-              })
-        }
-    })
+              dispatch(newVenue(venueData))
+            }
+        })
 
   return (
         <form onSubmit={formik.handleSubmit} className="w-full md:w-2/3 lg:w-1/2 mx-auto flex flex-col gap-8 text-[#125C85]">
@@ -119,7 +103,7 @@ const VenueForm = () => {
                             onBlur={formik.handleBlur}/>
                         <button type='button'><FontAwesomeIcon icon={faTrash}/></button>
                     </div>
-                <button type='button' className="w-12 h-12 rounded-full border-2 border-[#125C85] text-3xl mt-4 font-bold">+</button>
+                <button type='button' className="px-3 py-1 rounded-full border-2 border-[#125C85] text-3xl mt-4 font-bold">+</button>
             </div>
             <div className="flex justify-between">
                 <div className="flex flex-col w-2/5">

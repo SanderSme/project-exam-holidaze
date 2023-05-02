@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import BookingCalendar from '../BookingCalendar'
 
 const SingleVenue = () => {
     let {id} = useParams()
@@ -47,7 +48,7 @@ const SingleVenue = () => {
             <Slider {...settings}>
             {singleVenue.media.map((media) => (
             <div key={media} className='h-[350px] w-full mt-2 rounded'>
-                <img src={media} alt="venue" className='h-full mx-auto rounded'/>
+                <img src={media} alt="venue" className='h-full mx-auto rounded shadow'/>
             </div>
             ))}
             </Slider>
@@ -91,7 +92,13 @@ const SingleVenue = () => {
                         </div>
                     </div>
                 </div>
-            </div> 
+            </div>
+            <div className='mt-8'>
+            <h1 className='text-2xl mt-4'>Availability</h1>
+            <div className='w-full h-[1px] bg-gray-400 mb-8'>
+            </div>
+            <BookingCalendar/>
+            </div>
             </>}
             
         </div>
