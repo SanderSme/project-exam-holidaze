@@ -13,7 +13,7 @@ const VenueCards = (props) => {
         </div>
         <div className='flex flex-col h-full md:h-28 justify-between w-1/2 md:w-full'>
             <div>
-                {props.location !== "Unknown" ? <p className="text-sm"><span className="text-gray-500">City: </span>{props.location}</p> : null}
+                {props.location !== "Unknown" && props.location ? <p className="text-sm"><span className="text-gray-500">City: </span>{props.location}</p> : null}
                 <p className='font-semibold'>{props.name}</p>  
             </div>
             {props.rating > 0 ? <StarRating rating={props.rating}/> : <p className='italic text-gray-500'>No reviews</p>}

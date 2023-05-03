@@ -52,27 +52,27 @@ const HomePage = () => {
                 <button 
                 onClick={() => setCurrentPage(currentPage - 1)}
                 disabled={currentPage === 1}
-                className="mx-2 w-10 h-10 rounded-full bg-[#125C85] text-white hover:bg-[#A2D9FF] hover:text-black"
+                className="mx-2 w-8 h-8 rounded-full bg-[#125C85] text-white hover:bg-[#A2D9FF] hover:text-black"
                 >
                     <FontAwesomeIcon icon={faArrowLeft}/>
                 </button>
                 <div>
-                {pages.map((page) => (
-                <button
-                    key={page}
-                    onClick={() => setCurrentPage(page)}
-                    className={`mx-2 w-10 h-10 rounded-full hover:bg-[#A2D9FF] hover:text-black ${
-                        currentPage === page && "bg-[#125C85] text-white"
-                    }`}
-                    >
-                    {page}
-                </button>
+                    {pages.map((page) => (
+                    <button
+                        key={page}
+                        onClick={() => setCurrentPage(page)}
+                        className={`mx-2 w-8 h-8 rounded-full hover:bg-[#A2D9FF] hover:text-black text-sm ${
+                            currentPage === page && "bg-[#125C85] text-white"
+                        }`}
+                        >
+                        {page}
+                    </button>
                     ))}
-                    </div>
+                </div>
                 <button 
                 onClick={() => setCurrentPage(currentPage + 1)}
                 disabled={currentPage === totalPages}
-                className="mx-2 w-10 h-10 rounded-full bg-[#125C85] text-white hover:bg-[#A2D9FF] hover:text-black"
+                className="mx-2 w-8 h-8 rounded-full bg-[#125C85] text-white hover:bg-[#A2D9FF] hover:text-black"
                 >
                     <FontAwesomeIcon icon={faArrowRight}/>
                 </button>

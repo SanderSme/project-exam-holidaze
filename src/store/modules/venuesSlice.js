@@ -8,6 +8,7 @@ const venuesSlice = createSlice({
         cheapestHouses:[],
         topRatedHouses:[],
         createVenue: null,
+        deleteVenue: null
     },
     reducers: {
         SET_VENUES: (state, action) => {
@@ -42,6 +43,9 @@ const venuesSlice = createSlice({
         },
         SET_CREATE_VENUE: (state, action) => {
             state.createVenue = action.payload
+        },
+        SET_DELETE_VENUE: (state, action) => {
+            state.createVenue = action.payload
         }
     }
 })
@@ -51,6 +55,7 @@ export default venuesSlice.reducer
 const {SET_VENUES} = venuesSlice.actions
 const {SET_SINGLE_VENUE} = venuesSlice.actions
 const {SET_CREATE_VENUE} = venuesSlice.actions
+const {SET_DELETE_VENUE} = venuesSlice.actions
 const accessToken = localStorage.getItem("accessToken")
 
 export const fetchVenues = () => async (dispatch) => {
@@ -92,4 +97,17 @@ export const newVenue = (venueData) => async (dispatch) => {
     } catch(e) {
         console.log(e);
     }
+}
+
+export const deleteVenue = (id) =>  {
+        fetch(`https://nf-api.onrender.com/api/v1/holidaze/venues/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`
+            },
+        })
+        .then(() => {
+            window.location.href = '/profile';
+        })
 }

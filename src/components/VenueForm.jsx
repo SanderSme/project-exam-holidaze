@@ -1,13 +1,12 @@
-import { faTrash } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik"
 import * as Yup from 'yup'
 import { newVenue } from '../store/modules/venuesSlice'
+import VenueGallery from './VenueGallery';
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-
-const accessToken = localStorage.getItem("accessToken")
 
 const validationSchema = Yup.object().shape({
     name: Yup.string().min(6, "Must be 6 chars or more").max(50, "Can not be longer than 50 chars").required('Required'),
@@ -41,11 +40,11 @@ const VenueForm = () => {
                 pets: false
             },
             location: {
-                address: "unknown",
-                city: "unknown",
-                zip: "unknown",
-                country: "unknown",
-                continent: "unknown",
+                address: "",
+                city: "",
+                zip: "",
+                country: "",
+                continent: "",
                 lat: 0,
                 lng: 0
               }
@@ -103,8 +102,10 @@ const VenueForm = () => {
                             onBlur={formik.handleBlur}/>
                         <button type='button'><FontAwesomeIcon icon={faTrash}/></button>
                     </div>
+                    {formik.touched.media && formik.errors.media ? <div className='text-red-600'>{formik.errors.media}</div> : null}
                 <button type='button' className="px-3 py-1 rounded-full border-2 border-[#125C85] text-3xl mt-4 font-bold">+</button>
             </div>
+            {/* <VenueGallery handleChange={formik.handleChange} values={formik.values.media} handleBlur={formik.handleBlur} touched={formik.touched.media} errors={formik.errors.media}/> */}
             <div className="flex justify-between">
                 <div className="flex flex-col w-2/5">
                     <label htmlFor="pricePerNight">Price per night</label>
@@ -147,7 +148,7 @@ const VenueForm = () => {
                     <label htmlFor="parking" className="ml-2">Parking</label>
                 </div>
             </div>
-            <div className='p-2 bg-gray-100 rounded flex flex-col gap-4'>
+            <div className='p-2 bg-white rounded flex flex-col gap-4'>
             <div className="flex flex-col">
                 <label htmlFor="address">Address</label>
                 <input type="text" name='address' id="address" className="border-2 border-[#125C85] rounded p-1" onChange={formik.handleChange}
