@@ -1,11 +1,8 @@
-import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useFormik } from "formik"
 import * as Yup from 'yup'
 import { newVenue } from '../store/modules/venuesSlice'
-import VenueGallery from './VenueGallery';
-import { faTrash } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useState } from "react";
 
 
 const validationSchema = Yup.object().shape({
@@ -24,6 +21,7 @@ const validationSchema = Yup.object().shape({
 })
 
 const VenueForm = () => {
+    const [mediaArray, setMediaArray] = useState([]);
     const dispatch = useDispatch()
     const formik = useFormik({
         initialValues:{
@@ -54,7 +52,7 @@ const VenueForm = () => {
             const venueData = {
                 name: values.name,
                 description: values.description,
-                media: [values.media],
+                media: mediaArray,
                 price: values.price,
                 maxGuests: values.maxGuests,
                 rating: 5,
@@ -78,6 +76,17 @@ const VenueForm = () => {
               dispatch(newVenue(venueData))
             }
         })
+        function pushToMediaArray() {
+            const mediaValue = document.getElementById('media').value
+            const newMediaArray = [...mediaArray, mediaValue];
+            setMediaArray(newMediaArray);
+            document.getElementById('media').value = '';
+        }
+
+        function deleteMedia(media) {
+            const newMediaArray = mediaArray.filter((item) => item !== media);
+            setMediaArray(newMediaArray);
+          }
 
   return (
         <form onSubmit={formik.handleSubmit} className="w-full md:w-2/3 lg:w-1/2 mx-auto flex flex-col gap-8 text-[#125C85]">
@@ -97,15 +106,21 @@ const VenueForm = () => {
             </div>
             <div className="flex flex-col items-start">
                 <label htmlFor="gallery" className='mb-[-16px]'>Gallery</label>
+                {mediaArray && <div className='flex gap-1 flex-wrap mt-4'>
+                    {mediaArray.map((media) => (
+                         <div key={media} className='w-24 h-24 bg-gray-200 rounded relative'>
+                            <img src={media} alt="gallery" className='w-full h-full object-cover rounded' />
+                            <button type='button' onClick={() => deleteMedia(media)} className='flex justify-center items-center absolute top-[-4px] right-[-4px] h-4 w-4 bg-gray-200 rounded-full text-sm'>x</button>
+                        </div>
+                    ))}
+                </div>}
                     <div className="w-full flex gap-4 mt-4">
-                        <input type="text" name='media' className="border-2 border-[#125C85] rounded w-full p-1" onChange={formik.handleChange}
+                        <input type="text" name='media' id='media' className="border-2 border-[#125C85] rounded w-full p-1" onChange={formik.handleChange}
                             onBlur={formik.handleBlur}/>
-                        <button type='button'><FontAwesomeIcon icon={faTrash}/></button>
                     </div>
                     {formik.touched.media && formik.errors.media ? <div className='text-red-600'>{formik.errors.media}</div> : null}
-                <button type='button' className="px-3 py-1 rounded-full border-2 border-[#125C85] text-3xl mt-4 font-bold">+</button>
+                <button type='button' onClick={pushToMediaArray} className="px-3 py-1 rounded bg-[#125C85] hover:text-black hover:bg-[#A2D9FF] text-white mt-4 font-semibold place-self-end">Add</button>
             </div>
-            {/* <VenueGallery handleChange={formik.handleChange} values={formik.values.media} handleBlur={formik.handleBlur} touched={formik.touched.media} errors={formik.errors.media}/> */}
             <div className="flex justify-between">
                 <div className="flex flex-col w-2/5">
                     <label htmlFor="pricePerNight">Price per night</label>
@@ -153,7 +168,7 @@ const VenueForm = () => {
                 <label htmlFor="address">Address</label>
                 <input type="text" name='address' id="address" className="border-2 border-[#125C85] rounded p-1" onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        value={formik.values.address}/>
+                        value={formik.values.address || ""}/>
                         {formik.touched.address && formik.errors.address ? <div className='text-red-600'>{formik.errors.address}</div> : null}
             </div>
             <div className="flex justify-between">
@@ -161,14 +176,14 @@ const VenueForm = () => {
                     <label htmlFor="city">City</label>
                     <input type="text" name='city' id="city" className="border-2 border-[#125C85] rounded p-1" onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        value={formik.values.city}/>
+                        value={formik.values.city || ""}/>
                         {formik.touched.city && formik.errors.city ? <div className='text-red-600'>{formik.errors.city}</div> : null}
                 </div>
                 <div className="flex flex-col w-2/5">
                     <label htmlFor="zip">Zip-code</label>
                     <input type="text" name='zip' id="zip" className="border-2 border-[#125C85] rounded p-1" onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        value={formik.values.zip}/>
+                        value={formik.values.zip || ""}/>
                         {formik.touched.zip && formik.errors.zip ? <div className='text-red-600'>{formik.errors.zip}</div> : null}
                 </div>
             </div>
@@ -177,14 +192,14 @@ const VenueForm = () => {
                     <label htmlFor="country">Country</label>
                     <input type="text" name='country' id="country" className="border-2 border-[#125C85] rounded p-1" onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        value={formik.values.country}/>
+                        value={formik.values.country || ""}/>
                         {formik.touched.country && formik.errors.country ? <div className='text-red-600'>{formik.errors.country}</div> : null}
                 </div>
                 <div className="flex flex-col w-2/5">
                     <label htmlFor="continent">Continent</label>
                     <input type="text" name='continent' id="continent" className="border-2 border-[#125C85] rounded p-1" onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        value={formik.values.continent}/>
+                        value={formik.values.continent || ""}/>
                         {formik.touched.continent && formik.errors.continent ? <div className='text-red-600'>{formik.errors.continent}</div> : null}
                 </div>
             </div>

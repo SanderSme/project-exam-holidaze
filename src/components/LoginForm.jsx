@@ -33,9 +33,10 @@ const LoginForm = () => {
             })
             .then(data => {
                 console.log(data);
-                localStorage.setItem("userName", data.name);
-                localStorage.setItem("accessToken", data.accessToken);
-                localStorage.setItem("avatar", data.avatar);
+                localStorage.setItem('userName', data.name)
+                localStorage.setItem('email', data.email)
+                localStorage.setItem('avatar', data.avatar)
+                localStorage.setItem('venueManager', data.venueManager)
                 window.location.href = '/';
             })
             .catch(error => {

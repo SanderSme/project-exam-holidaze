@@ -3,14 +3,14 @@ import { fetchSingleProfile } from '../../store/modules/profileSlice'
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { faCamera } from '@fortawesome/free-solid-svg-icons'
-import { faTrash } from '@fortawesome/free-solid-svg-icons'
-import { faEdit } from '@fortawesome/free-solid-svg-icons'
+import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import VenueCards from '../VenueCards';
 import { Link } from 'react-router-dom';
 import { deleteVenue } from '../../store/modules/venuesSlice';
 import { useFormik } from "formik"
 import * as Yup from 'yup'
+import { updateLocalStorrage } from '../../utils/Storrage';
 
 const accessToken = localStorage.getItem('accessToken')
 // if(!accessToken) {
@@ -58,7 +58,7 @@ const Profile = () => {
     })
     .then(data => {
         console.log(data);
-      window.location.href = '/profile';
+        updateLocalStorrage(`https://nf-api.onrender.com/api/v1/holidaze/profiles/${name}`)
     })
     .catch(error => {
         console.error(error)
@@ -70,17 +70,10 @@ const Profile = () => {
     document.getElementById('changeAvatarInput').classList.toggle('hidden')
   }
 
-  function displayDeleteOverlay() {
-    const deleteOverlay = document.getElementsByClassName('deleteOverlay')
-    for(let i = 0; i < deleteOverlay.length; i++) {
-      deleteOverlay[i].classList.toggle('hidden')
-    }
-  }
-
-  function removeDeleteOverlay() {
-    const deleteOverlay = document.getElementsByClassName('deleteOverlay')
-    for(let i = 0; i < deleteOverlay.length; i++) {
-      deleteOverlay[i].classList.add('hidden')
+  function toggleVenueOverlay() {
+    const venueOverlay = document.getElementsByClassName('venueOverlay')
+    for(let i = 0; i < venueOverlay.length; i++) {
+      venueOverlay[i].classList.toggle('hidden')
     }
   }
 
@@ -127,15 +120,11 @@ const Profile = () => {
           <Link to={`/venue/${venue.id}`}>
           <VenueCards media={venue.media[0]} name={venue.name} price={venue.price} location={venue.location.city} rating={venue.rating}/>
           </Link>
-          <button onClick={displayDeleteOverlay} className='deleteVenueBtn absolute top-[-0.7rem] left-1/2 md:left-[-0.3rem] hover:scale-110 text-[#125C85]'><FontAwesomeIcon icon={faTrash}/></button>
-          <div data-id={venue.id} className='deleteOverlay absolute hidden w-2/3 h-24 bg-[#125C85] top-3 left-[-0.3rem] rounded flex flex-col gap-3 p-4'>
-            <h2 className='text-white text-center'>Delete this Venue?</h2>
-            <div className='flex w-full justify-between'>
-              <button data-id={venue.id} onClick={deleteVenueByID} className='deleteVenueBtn px-2 py-1 rounded bg-red-600 font-semibold text-sm hover:scale-110'>Delete</button>
-              <button onClick={removeDeleteOverlay} className='px-2 py-1 rounded bg-green-500 font-semibold text-sm hover:scale-110'>Keep</button>
-            </div>
+          <button type='button' className='absolute top-0 right-[2px] text-xl text-[#125C85]' onClick={toggleVenueOverlay}><FontAwesomeIcon icon={faEllipsisVertical}/></button>
+          <div className='venueOverlay w-fit h-fit px-6 py-4 bg-[#125C85] absolute rounded top-6 right-0 text-sm text-white hidden'>
+            <p className='mb-4'>Edit venue</p>
+            <button type='button' className='deleteVenueBtn hover:underline' onClick={deleteVenueByID} data-id={venue.id}>Delete venue</button>
           </div>
-          <button className='absolute top-[-0.7rem] right-0 md:right-[-0.3rem] hover:scale-110 text-[#125C85]'><FontAwesomeIcon icon={faEdit}/></button>
           </div>
         )) : <div className='flex justify-center w-full mt-12 mb-24'><p className='text-2xl italic text-gray-600'>You have no Venues</p></div>}
         </div>

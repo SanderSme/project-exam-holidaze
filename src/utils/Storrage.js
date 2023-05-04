@@ -1,73 +1,8 @@
-const tokenKey = 'accessToken';
-const userKey = 'userName';
+const accessToken = localStorage.getItem('accessToken')
 
-function saveUser(user) {
-  saveToLocalStorage(userKey, user);
+function clearStorrage() {
+  localStorage.clear()
 }
-
-function saveToken(token) {
-  saveToLocalStorage(tokenKey, token);
-}
-
-function getToken() {
-  const value = localStorage.getItem(tokenKey);
-  if (value) {
-    return JSON.parse(value);
-  } else {
-    return null;
-  }
-}
-
-function getUserName() {
-  const user = getFromLocalStorage(userKey);
-  if (userKey) {
-    return user.name;
-  } else {
-    return null;
-  }
-}
-
-function getUserAvatar() {
-  const user = getFromLocalStorage(userKey);
-  if (userKey) {
-    return user.avatar;
-  } else {
-    return null;
-  }
-}
-
-function getUserEmail() {
-  const user = getFromLocalStorage(userKey);
-  if (userKey) {
-    return user.email;
-  } else {
-    return null;
-  }
-}
-
-function getUserCredits() {
-  const user = getFromLocalStorage(userKey);
-  if (userKey) {
-    return user.credits;
-  } else {
-    return null;
-  }
-}
-
-function saveToLocalStorage(key, value) {
-  localStorage.setItem(key, JSON.stringify(value));
-}
-
-function getFromLocalStorage(key) {
-  const value = localStorage.getItem(key);
-  if (value) {
-    return JSON.parse(value);
-  } else {
-    return [];
-  }
-}
-
-const accessToken = getToken();
 
 function updateLocalStorrage(url) {
   async function getUserData() {
@@ -80,32 +15,18 @@ function updateLocalStorrage(url) {
     });
     if (response.ok) {
       const data = await response.json();
-      const userToSave = {
-        name: data.name,
-        email: data.email,
-        avatar: data.avatar,
-      };
-      saveUser(userToSave);
-      location.reload();
+      localStorage.setItem('userName', data.name)
+      localStorage.setItem('email', data.email)
+      localStorage.setItem('avatar', data.avatar)
+      localStorage.setItem('venueManager', data.venueManager)
+      window.location.href= '/profile'
     } else {
       console.log('There was an error');
     }
   }
   getUserData();
 }
-
-function clearStorage() {
-  localStorage.clear();
-}
-
 export {
-  getUserName,
-  getToken,
-  saveToken,
-  saveUser,
-  clearStorage,
-  getUserAvatar,
-  getUserCredits,
-  getUserEmail,
   updateLocalStorrage,
+  clearStorrage
 };
