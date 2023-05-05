@@ -9,6 +9,7 @@ import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { LowestPrice, BestRated } from '../Stickers'
+import Filter from '../Filter'
 
 
 const HomePage = () => {
@@ -27,13 +28,21 @@ const HomePage = () => {
         dispatch(fetchVenues())
     }, [dispatch])
 
+    function displayFilter() {
+        document.getElementById('filter').classList.toggle('hidden')
+    }
+
+
   return (
     <div>
         <HeroBanner/>
         <div className='max-w-7xl w-11/12 mx-auto'>
-            <div className='flex justify-between items-center'>
+            <div className='flex justify-between items-center relative'>
                 <h1 className='text-2xl mt-4'>Venues</h1>
-                <button className='px-4 h-[30px] rounded bg-[#125C85] text-white'><FontAwesomeIcon icon={faFilter}/> Filter</button>
+                <button onClick={displayFilter} className='px-4 h-[30px] rounded bg-[#125C85] text-white z-40'><FontAwesomeIcon icon={faFilter}/> Filter</button>
+                <div id='filter' className='absolute h-fit w-96 p-8 bg-gradient-to-b from-[#125C85] to-[#307095] rounded right-0 top-12 z-40 text-white hidden'>
+                    <Filter/>
+                </div>
             </div>
             <div className='w-full h-[1px] bg-gray-400 mb-8'>
             </div>
