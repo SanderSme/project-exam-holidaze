@@ -5,6 +5,7 @@ import Register from "../components/views/Register"
 import Login from "../components/views/Login"
 import NewVenue from "../components/views/NewVenue"
 import Profile from "../components/views/Profile"
+import UpdateVenue from "../components/views/UpdateVenue"
 
 const Router = () => {
   return (
@@ -16,6 +17,7 @@ const Router = () => {
             <Route path="/create-venue" element={<NewVenue/>}/>
             <Route path="/register" element={<Register/>}/>
             <Route path="/login" element={<Login/>}/>
+            <Route path="/update/:id" element={<UpdateVenue/>}/>
         </Routes>
     </>
   )

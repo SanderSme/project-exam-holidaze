@@ -31,7 +31,7 @@ const Filter = () => {
             <p>Price:</p>
             <div className='flex w-full justify-around mb-4'>
                 <div className='flex flex-col w-1/3'>
-                    <input type="number" name='minPrice' id='minPrice' className='text-black rounded p-1' min="1" onChange={formik.handleChange}
+                    <input type="number" name='minPrice' id='minPrice' className='text-black rounded p-1' min="0" onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                         value={formik.values.minPrice}/>
                     <label htmlFor="minPrice">Min $</label>
@@ -84,7 +84,8 @@ const Filter = () => {
                     <label htmlFor="parking" className="ml-2">Parking</label>
                 </div>
             </div>
-            <button type='submit' className='p-2 w-1/2 mx-auto bg-[#FFC107] text-black rounded shadow'>Apply filter</button>
+            <button type='submit' className='p-1 w-2/5 mx-auto bg-[#FFC107] text-black rounded shadow'>Apply filter</button>
+            <p className="mx-auto mt-4 hover:underline">Clear filter</p>
     </form>
   )
 }

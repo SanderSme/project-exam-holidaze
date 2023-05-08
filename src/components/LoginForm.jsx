@@ -1,5 +1,7 @@
 import { useFormik } from "formik"
 import * as Yup from 'yup'
+import { Link } from "react-router-dom"
+import { logIn } from "../store/modules/profileSlice"
 
 const validationSchema = Yup.object().shape({
     email: Yup.string().required('Required').email('Invalid email'),
@@ -18,30 +20,7 @@ const LoginForm = () => {
                 email: values.email,
                 password: values.password
             };
-            fetch('https://nf-api.onrender.com/api/v1/holidaze/auth/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(userData)
-            })
-            .then(response => {
-                if(!response.ok) {
-                    throw new Error(response.statusText)
-                }
-                return response.json()
-            })
-            .then(data => {
-                console.log(data);
-                localStorage.setItem('userName', data.name)
-                localStorage.setItem('email', data.email)
-                localStorage.setItem('avatar', data.avatar)
-                localStorage.setItem('venueManager', data.venueManager)
-                window.location.href = '/';
-            })
-            .catch(error => {
-                console.error(error)
-            })
+            logIn(userData)
         }
     })
   return (
@@ -56,7 +35,7 @@ const LoginForm = () => {
                         value={formik.values.email}
                         id="email" 
                         className="w-full rounded p-1"/>
-                        {formik.touched.email && formik.errors.email ? <div className='text-red-600'>{formik.errors.email}</div> : null}
+                        {formik.touched.email && formik.errors.email ? <div className='text-red-600 font-semibold'>{formik.errors.email}</div> : null}
             </div>
             <div>
                 <label htmlFor="password" className="text-white">Password:</label>
@@ -67,10 +46,14 @@ const LoginForm = () => {
                         value={formik.values.password}
                         id="password" 
                         className="w-full rounded p-1"/>
-                        {formik.touched.password && formik.errors.password ? <div className='text-red-600'>{formik.errors.password}</div> : null}
+                        {formik.touched.password && formik.errors.password ? <div className='text-red-600 font-semibold'>{formik.errors.password}</div> : null}
 
             </div>
+            <p id="errorMessage" className="text-red-600 font-semibold"></p>
             <button type="submit" className="bg-[#FFC107] w-1/3 py-1 rounded shadow place-self-end">Sing in</button>
+            <Link to="/register">
+                <p className="text-white underline">Dont have an account?</p>
+            </Link>
         </form>
     </>
   )

@@ -80,7 +80,7 @@ const Header = () => {
               </NavLink>
               <button type='button' id='arrowDown' className='text-white' onClick={displayProfileMenu}><FontAwesomeIcon icon={faCaretDown}/></button>
               <button type='button' id='arrowUp' className='text-white hidden' onClick={hideProfileMenu}><FontAwesomeIcon icon={faCaretUp}/></button>
-              <div id='profileMenu' className='hidden h-fit w-fit px-6 py-4 bg-[#A2D9FF] absolute right-0 top-16 z-40 rounded flex flex-col gap-8'>
+              <div id='profileMenu' className='hidden h-fit w-fit p-4 bg-gradient-to-b from-[#125C85] to-[#307095] shadow text-white absolute right-0 top-16 z-40 rounded flex flex-col gap-8'>
                 <button type='button' onClick={signOut} className='text-start hover:underline'>Sign out</button>
                 <NavLink to={'/profile'} className='hover:underline'>View profile</NavLink>
               </div>

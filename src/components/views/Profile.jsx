@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import VenueCards from '../VenueCards';
 import { Link } from 'react-router-dom';
 import { deleteVenue } from '../../store/modules/venuesSlice';
+import { deleteBooking } from '../../store/modules/venuesSlice';
 import { useFormik } from "formik"
 import * as Yup from 'yup'
 import { updateLocalStorrage } from '../../utils/Storrage';
@@ -87,6 +88,16 @@ const Profile = () => {
   }
 }
 
+function deleteBookingByID() {
+  const deleteBookingBtn = document.getElementsByClassName('deleteBookingBtn')
+  for(let i = 0; i < deleteBookingBtn.length; i++) {
+    deleteBookingBtn[i].addEventListener('click', () => {
+      const deleteBookingID = deleteBookingBtn[i].dataset.id
+      deleteBooking(deleteBookingID)
+  })
+}
+}
+
 const [activeTab, setActiveTab] = useState("venues")
 
   return (
@@ -146,7 +157,7 @@ const [activeTab, setActiveTab] = useState("venues")
                   </Link>
                   <button type='button' className='absolute top-0 right-[2px] text-xl text-[#125C85]' onClick={toggleVenueOverlay}><FontAwesomeIcon icon={faEllipsisVertical}/></button>
                   <div className='venueOverlay w-fit h-fit px-6 py-4 bg-[#125C85] absolute rounded top-6 right-0 text-sm text-white hidden'>
-                    <p className='mb-4'>Edit venue</p>
+                    <Link to={`/update/${venue.id}`}> <p className='mb-4'>Edit venue</p></Link>
                     <button type='button' className='deleteVenueBtn hover:underline' onClick={deleteVenueByID} data-id={venue.id}>Delete venue</button>
                   </div>
                 </div>
@@ -156,10 +167,40 @@ const [activeTab, setActiveTab] = useState("venues")
           {activeTab === "bookings" && (
             <>
               {singleProfile.bookings.length ? singleProfile.bookings.map((booking) => (
-                <div key={booking.id}>
-                  <Link to={`/venue/${booking.id}`}>
-                    <VenueCards media={booking.media[0]} name={booking.name} price={booking.price} location={booking.location.city} rating={booking.rating}/>
+                <div key={booking.id} className='flex gap-4 relative'>
+                  <Link to={`/venue/${booking.venue.id}`}>
+                  <div className='w-[373px] md:w-[255px] flex gap-4 md:gap-0 md:flex-col h-[190px] md:h-[369px] p-2 bg-white rounded mb-8 md:mb-12 shadow hover:scale-110 hover:cursor-pointer relative'>
+                        <div className='w-[190px] md:w-full h-[170px] md:h-[236px] relative'>
+                          <div className="absolute left-0 right-0 bottom-0 top-[50%] bg-gradient-to-b from-[#00000000] to-[#00000070] rounded">
+                          <p className="absolute bottom-2 left-2 text-white font-semibold text-lg z-30">${booking.venue.price}</p>
+                          </div>
+                            <img src={booking.venue.media[0]} alt="venue" className='w-full h-full object-cover rounded' />
+                        </div>
+                        <div className='flex flex-col h-full md:h-28 justify-between w-1/2 md:w-full'>
+                            <div>
+                                {booking.venue.city !== "Unknown" && booking.venue.city ? <p className="text-sm"><span className="text-gray-500">City: </span>{booking.venue.location}</p> : null}
+                                <p className='font-semibold'>{booking.venue.name}</p>  
+                            </div>
+                            <div className='flex flex-col gap-2 text-sm'>
+                              <p>
+                                Guests: {booking.guests}
+                              </p>
+                              <p>
+                                From: {new Date(booking.dateFrom).toLocaleDateString()}
+                              </p>
+                              <p>
+                                To: {new Date(booking.dateTo).toLocaleDateString()}
+                              </p>
+                          </div>
+                        </div>
+                    </div>
                   </Link>
+                  <button type='button' className='absolute top-0 right-[2px] text-xl text-[#125C85]' onClick={toggleVenueOverlay}><FontAwesomeIcon icon={faEllipsisVertical}/></button>
+                  <div className='venueOverlay w-fit h-fit px-6 py-4 bg-[#125C85] absolute rounded top-6 right-0 text-sm text-white hidden'>
+                    <p className='mb-4'>Edit venue</p>
+                    <button type='button' className='deleteBookingBtn hover:underline' onClick={deleteBookingByID} data-id={booking.id}>Delete booking</button>
+                  </div>
+                  
                 </div>
               )) : <div className='flex justify-center w-full mt-12 mb-24'><p className='text-2xl italic text-gray-600'>You have no Bookings</p></div>}
             </>

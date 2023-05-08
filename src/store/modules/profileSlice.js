@@ -8,7 +8,7 @@ const profileSlice = createSlice({
     reducers: {
         SET_SINGLE_PROFILE: (state, action) => {
             state.singleProfile = action.payload
-        }
+        },
     }
 })
 
@@ -33,4 +33,55 @@ export const fetchSingleProfile = (name, profileData) => async (dispatch) => {
     } catch(e) {
         console.log(e);
     }
+}
+
+export const logIn = (userData) => {
+    fetch('https://nf-api.onrender.com/api/v1/holidaze/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(userData)
+            })
+            .then(response => {
+                if(!response.ok) {
+                    throw new Error(response.statusText)
+                }
+                return response.json()
+            })
+            .then(data => {
+                console.log(data);
+                localStorage.setItem('userName', data.name)
+                localStorage.setItem('email', data.email)
+                localStorage.setItem('avatar', data.avatar)
+                localStorage.setItem('accessToken', data.accessToken)
+                localStorage.setItem('venueManager', data.venueManager)
+                window.location.href = '/';
+            })
+            .catch(error => {
+                document.getElementById('errorMessage').innerHTML = "Wrong password or email"
+            })
+}
+
+export const registerUser = (userData) => {
+    fetch('https://nf-api.onrender.com/api/v1/holidaze/auth/register', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify(userData)
+              })
+              .then(response => {
+                  if(!response.ok) {
+                      throw new Error(response.statusText)
+                  }
+                  return response.json()
+              })
+              .then(data => {
+                  console.log(data);
+                window.location.href = '/login';
+              })
+              .catch(error => {
+                document.getElementById('errorMessage').innerHTML = "There was an Error, pleace try again"
+              })
 }

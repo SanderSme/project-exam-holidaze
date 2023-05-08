@@ -1,9 +1,11 @@
 import { useFormik } from "formik"
 import * as Yup from 'yup'
+import { Link } from "react-router-dom"
+import { registerUser } from "../store/modules/profileSlice"
 
 const validationSchema = Yup.object().shape({
-    name: Yup.string().min(3, "Must be 3 chars or more").max(50, "Can not be longer than 50 chars").required('Required'),
-    email: Yup.string().required('Required').email('Invalid email'),
+    name: Yup.string().min(3, "Must be 3 chars or more").max(50, "Can not be longer than 50 chars").matches(/^\S*$/, 'No spaces allowed in name').required('Required'),
+    email: Yup.string().required('Required').email('Invalid email').matches(/@stud\.noroff\.no$/, 'Must be a stud.noroff.no email address'),
     password: Yup.string().min(8, "Must be 8 chars or more").max(50, "Can not be longer than 50 chars").required('Required'),
     confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match').required('Required'),
     avatar: Yup.string()
@@ -30,27 +32,7 @@ const RegisterForm = () => {
                 venueManager: values.venueManager === "yes",
                 password: values.password
               };
-              console.log(userData);
-                fetch('https://nf-api.onrender.com/api/v1/holidaze/auth/register', {
-                  method: 'POST',
-                  headers: {
-                      'Content-Type': 'application/json'
-                  },
-                  body: JSON.stringify(userData)
-              })
-              .then(response => {
-                  if(!response.ok) {
-                      throw new Error(response.statusText)
-                  }
-                  return response.json()
-              })
-              .then(data => {
-                  console.log(data);
-                window.location.href = '/login';
-              })
-              .catch(error => {
-                  console.error(error)
-              })
+                registerUser(userData)
         }
     })
   return (
@@ -65,7 +47,7 @@ const RegisterForm = () => {
                         value={formik.values.name}
                         id="name" 
                         className="w-full rounded p-1"/>
-                        {formik.touched.name && formik.errors.name ? <div className='text-red-600'>{formik.errors.name}</div> : null}
+                        {formik.touched.name && formik.errors.name ? <div className='text-red-600 font-semibold'>{formik.errors.name}</div> : null}
             </div>
             <div>
                 <label htmlFor="email" className="text-white">Email:</label>
@@ -76,7 +58,7 @@ const RegisterForm = () => {
                         value={formik.values.email}
                         id="email" 
                         className="w-full rounded p-1"/>
-                        {formik.touched.email && formik.errors.email ? <div className='text-red-600'>{formik.errors.email}</div> : null}
+                        {formik.touched.email && formik.errors.email ? <div className='text-red-600 font-semibold'>{formik.errors.email}</div> : null}
             </div>
             <div>
                 <label htmlFor="avatar" className="text-white">Avatar:</label>
@@ -87,7 +69,7 @@ const RegisterForm = () => {
                         value={formik.values.avatar}
                         id="avatar" 
                         className="w-full rounded p-1"/>
-                        {formik.touched.avatar && formik.errors.avatar ? <div className='text-red-600'>{formik.errors.avatar}</div> : null}
+                        {formik.touched.avatar && formik.errors.avatar ? <div className='text-red-600 font-semibold'>{formik.errors.avatar}</div> : null}
             </div>
             <div>
                 <label htmlFor="password" className="text-white">Password:</label>
@@ -98,7 +80,7 @@ const RegisterForm = () => {
                         value={formik.values.password}
                         id="password" 
                         className="w-full rounded p-1"/>
-                        {formik.touched.password && formik.errors.password ? <div className='text-red-600'>{formik.errors.password}</div> : null}
+                        {formik.touched.password && formik.errors.password ? <div className='text-red-600 font-semibold'>{formik.errors.password}</div> : null}
 
             </div>
             <div>
@@ -110,7 +92,7 @@ const RegisterForm = () => {
                         value={formik.values.confirmPassword}
                         id="confirmPassword" 
                         className="w-full rounded p-1"/>
-                        {formik.touched.confirmPassword && formik.errors.confirmPassword ? <div className='text-red-600'>{formik.errors.confirmPassword}</div> : null}
+                        {formik.touched.confirmPassword && formik.errors.confirmPassword ? <div className='text-red-600 font-semibold'>{formik.errors.confirmPassword}</div> : null}
             </div>
             <fieldset className="text-white flex flex-col md:flex-row gap-4 md:gap-12">
                 <p>Are you a venue manager?</p>
@@ -123,7 +105,11 @@ const RegisterForm = () => {
                     <label htmlFor="no" className="ml-1">No</label>
                 </div>
             </fieldset>
+            <p id="errorMessage" className="text-red-600 font-semibold"></p>
             <button type="submit" className="bg-[#FFC107] w-1/2 md:w-1/3 py-1 rounded shadow place-self-end">Create profile</button>
+            <Link to="/login">
+                <p className="text-white underline">Already have an account?</p>
+            </Link>
         </form>
     </>
   )

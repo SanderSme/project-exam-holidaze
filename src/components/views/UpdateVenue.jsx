@@ -1,8 +1,11 @@
-import { useDispatch } from "react-redux";
+import VenueForm from "../VenueForm"
+import { fetchSingleVenue } from '../../store/modules/venuesSlice'
+import { useParams } from "react-router-dom"
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik"
 import * as Yup from 'yup'
-import { newVenue } from '../store/modules/venuesSlice'
-import { useState } from "react";
+import { updateVenue } from "../../store/modules/venuesSlice";
 
 
 const validationSchema = Yup.object().shape({
@@ -20,16 +23,23 @@ const validationSchema = Yup.object().shape({
     zip: Yup.string().required('Required'),
 })
 
-const VenueForm = () => {
-    const [mediaArray, setMediaArray] = useState([]);
+const UpdateVenue = () => {
+    let {id} = useParams()
     const dispatch = useDispatch()
+    const {singleVenue} = useSelector(state => state.venues)
+    useEffect(() => {
+        if(id){
+            dispatch(fetchSingleVenue(id))
+        }
+    }, [dispatch, id])
+    const [mediaArray, setMediaArray] = useState(singleVenue ? singleVenue.media : []);
     const formik = useFormik({
         initialValues:{
-            name: "",
-            description: "",
+            name: singleVenue?.name || "",
+            description: singleVenue?.description || "",
             media: [],
-            price: 1,
-            maxGuests: 1,
+            price: singleVenue?.price || 1,
+            maxGuests: singleVenue?.maxGuests || 1,
             rating: 5,
             meta: {
                 wifi: false,
@@ -38,11 +48,11 @@ const VenueForm = () => {
                 pets: false
             },
             location: {
-                address: "",
-                city: "",
-                zip: "",
-                country: "",
-                continent: "",
+                address: singleVenue?.location.address || "",
+                city: singleVenue?.location.city || "",
+                zip: singleVenue?.location.zip || "",
+                country: singleVenue?.location.country || "",
+                continent: singleVenue?.location.continent || "",
                 lat: 0,
                 lng: 0
               }
@@ -73,7 +83,7 @@ const VenueForm = () => {
                   }
               };
               console.log(venueData);
-              dispatch(newVenue(venueData))
+              dispatch(updateVenue(id, venueData))
             }
         })
         function pushToMediaArray() {
@@ -93,8 +103,12 @@ const VenueForm = () => {
             const newMediaArray = mediaArray.filter((item) => item !== media);
             setMediaArray(newMediaArray);
           }
-
   return (
+    <div className="max-w-7xl w-11/12 mx-auto">
+        {singleVenue && <><div>
+            <h1 className='text-2xl mt-8'>Update Venue</h1>
+        </div>
+        <div className='w-full h-[1px] bg-gray-300 mb-8'></div>
         <form onSubmit={formik.handleSubmit} className="w-full md:w-2/3 lg:w-1/2 mx-auto flex flex-col gap-8 text-[#125C85]">
             <div className="flex flex-col">
                 <label htmlFor="name">Title</label>
@@ -174,7 +188,7 @@ const VenueForm = () => {
                 <label htmlFor="address">Address</label>
                 <input type="text" name='address' id="address" className="border-2 border-[#125C85] rounded p-1" onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        value={formik.values.address || ""}/>
+                        value={formik.values.location.address}/>
                         {formik.touched.address && formik.errors.address ? <div className='text-red-600'>{formik.errors.address}</div> : null}
             </div>
             <div className="flex justify-between">
@@ -182,14 +196,14 @@ const VenueForm = () => {
                     <label htmlFor="city">City</label>
                     <input type="text" name='city' id="city" className="border-2 border-[#125C85] rounded p-1" onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        value={formik.values.city || ""}/>
+                        value={formik.values.location.city}/>
                         {formik.touched.city && formik.errors.city ? <div className='text-red-600'>{formik.errors.city}</div> : null}
                 </div>
                 <div className="flex flex-col w-2/5">
                     <label htmlFor="zip">Zip-code</label>
                     <input type="text" name='zip' id="zip" className="border-2 border-[#125C85] rounded p-1" onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        value={formik.values.zip || ""}/>
+                        value={formik.values.location.zip}/>
                         {formik.touched.zip && formik.errors.zip ? <div className='text-red-600'>{formik.errors.zip}</div> : null}
                 </div>
             </div>
@@ -198,21 +212,23 @@ const VenueForm = () => {
                     <label htmlFor="country">Country</label>
                     <input type="text" name='country' id="country" className="border-2 border-[#125C85] rounded p-1" onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        value={formik.values.country || ""}/>
+                        value={formik.values.location.country}/>
                         {formik.touched.country && formik.errors.country ? <div className='text-red-600'>{formik.errors.country}</div> : null}
                 </div>
                 <div className="flex flex-col w-2/5">
                     <label htmlFor="continent">Continent</label>
                     <input type="text" name='continent' id="continent" className="border-2 border-[#125C85] rounded p-1" onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        value={formik.values.continent || ""}/>
+                        value={formik.values.location.continent}/>
                         {formik.touched.continent && formik.errors.continent ? <div className='text-red-600'>{formik.errors.continent}</div> : null}
                 </div>
             </div>
             </div>
-            <button type="submit" className="bg-[#FFC107] w-full md:w-1/2 lg:w-1/3 py-1 rounded shadow place-self-end text-black mt-4 mb-8">Publish</button>
-        </form>
+            <button type="submit" className="bg-[#FFC107] w-full md:w-1/2 lg:w-1/3 py-1 rounded shadow place-self-end text-black mt-4 mb-8">Save changes</button>
+        </form></>}
+        
+    </div>
   )
 }
 
-export default VenueForm
+export default UpdateVenue
