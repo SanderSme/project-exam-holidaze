@@ -3,7 +3,7 @@ import { fetchSingleProfile } from '../../store/modules/profileSlice'
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { faCamera } from '@fortawesome/free-solid-svg-icons'
-import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons'
+import { faEllipsis } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import VenueCards from '../VenueCards';
 import { Link } from 'react-router-dom';
@@ -14,9 +14,6 @@ import * as Yup from 'yup'
 import { updateLocalStorrage } from '../../utils/Storrage';
 
 const accessToken = localStorage.getItem('accessToken')
-// if(!accessToken) {
-//   location.href='/login'
-// }
 const validationSchema = Yup.object().shape({
   avatar: Yup.string()
     .url('Invalid URL')
@@ -71,10 +68,12 @@ const Profile = () => {
     document.getElementById('changeAvatarInput').classList.toggle('hidden')
   }
 
-  function toggleVenueOverlay() {
-    const venueOverlay = document.getElementsByClassName('venueOverlay')
+  function toggleVenueOverlay(venueID) {
+    const venueOverlay = document.querySelectorAll('.venueOverlay')
     for(let i = 0; i < venueOverlay.length; i++) {
-      venueOverlay[i].classList.toggle('hidden')
+      if(venueOverlay[i].dataset.id === venueID) {
+        venueOverlay[i].classList.toggle('hidden')
+    }
     }
   }
 
@@ -153,11 +152,11 @@ const [activeTab, setActiveTab] = useState("venues")
               {singleProfile.venues.length ? singleProfile.venues.map((venue) => (
                 <div key={venue.id} className='relative'>
                   <Link to={`/venue/${venue.id}`}>
-                    <VenueCards media={venue.media[0]} name={venue.name} price={venue.price} location={venue.location.city} rating={venue.rating}/>
+                    <VenueCards media={venue.media[0]} name={venue.name} price={venue.price} location={venue.location.city} rating={venue.rating} overlay={``}/>
                   </Link>
-                  <button type='button' className='absolute top-0 right-[2px] text-xl text-[#125C85]' onClick={toggleVenueOverlay}><FontAwesomeIcon icon={faEllipsisVertical}/></button>
-                  <div className='venueOverlay w-fit h-fit px-6 py-4 bg-[#125C85] absolute rounded top-6 right-0 text-sm text-white hidden'>
-                    <Link to={`/update/${venue.id}`}> <p className='mb-4'>Edit venue</p></Link>
+                  <button type='button' className='absolute top-[-12px] right-[-12px] text-xl text-[#125C85] bg-[#A2D9FF] h-8 w-8 flex items-center justify-center rounded-full' data-id={venue.id} onClick={() => toggleVenueOverlay(venue.id)}><FontAwesomeIcon icon={faEllipsis}/></button>
+                  <div className={`venueOverlay w-fit h-fit px-6 py-4 bg-[#125C85] absolute rounded top-6 right-0 text-sm text-white hidden`} data-id={venue.id}>
+                    <Link to={`/update/${venue.id}`}> <p className='mb-4 hover:underline'>Edit venue</p></Link>
                     <button type='button' className='deleteVenueBtn hover:underline' onClick={deleteVenueByID} data-id={venue.id}>Delete venue</button>
                   </div>
                 </div>
@@ -195,9 +194,9 @@ const [activeTab, setActiveTab] = useState("venues")
                         </div>
                     </div>
                   </Link>
-                  <button type='button' className='absolute top-0 right-[2px] text-xl text-[#125C85]' onClick={toggleVenueOverlay}><FontAwesomeIcon icon={faEllipsisVertical}/></button>
-                  <div className='venueOverlay w-fit h-fit px-6 py-4 bg-[#125C85] absolute rounded top-6 right-0 text-sm text-white hidden'>
-                    <p className='mb-4'>Edit venue</p>
+                  <button type='button' className='absolute top-[-12px] right-[-12px] text-xl text-[#125C85] bg-[#A2D9FF] h-8 w-8 flex items-center justify-center rounded-full' data-id={venue.id} onClick={() => toggleVenueOverlay(venue.id)}><FontAwesomeIcon icon={faEllipsis}/></button>
+                  <div className={`venueOverlay w-fit h-fit px-6 py-4 bg-[#125C85] absolute rounded top-6 right-0 text-sm text-white hidden`} data-id={booking.id}>
+                    <Link to="/"> <p className='mb-4 hover:underline'>Edit booking</p></Link>
                     <button type='button' className='deleteBookingBtn hover:underline' onClick={deleteBookingByID} data-id={booking.id}>Delete booking</button>
                   </div>
                   

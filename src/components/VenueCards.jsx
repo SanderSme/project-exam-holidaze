@@ -2,7 +2,7 @@ import StarRating from "./StarRating"
 
 const VenueCards = (props) => {
   return (
-    <div className='w-[373px] md:w-[255px] flex gap-4 md:gap-0 md:flex-col h-[190px] md:h-[369px] p-2 bg-white rounded mb-8 md:mb-12 shadow hover:scale-110 hover:cursor-pointer relative'>
+    <div className={`w-[373px] md:w-[255px] flex gap-4 md:gap-0 md:flex-col h-[190px] md:h-[369px] p-2 bg-white rounded mb-8 md:mb-12 shadow ${props.hover} hover:cursor-pointer relative`}>
       {props.sticker2}
         <div className='w-[190px] md:w-full h-[170px] md:h-[236px] relative'>
           <div className="absolute left-0 right-0 bottom-0 top-[50%] bg-gradient-to-b from-[#00000000] to-[#00000070] rounded">

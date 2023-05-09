@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik"
 import * as Yup from 'yup'
 import { updateVenue } from "../../store/modules/venuesSlice";
+import Loader from "../layout/Loader";
 
 
 const validationSchema = Yup.object().shape({

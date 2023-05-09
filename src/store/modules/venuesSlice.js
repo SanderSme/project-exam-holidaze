@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { setLoadingState } from "./loaderSlice";
 
 const venuesSlice = createSlice({
     name: 'venues',
@@ -58,23 +59,29 @@ const {SET_UPDATE_VENUE} = venuesSlice.actions
 const accessToken = localStorage.getItem("accessToken")
 
 export const fetchVenues = () => async (dispatch) => {
+    dispatch(setLoadingState(true))
     try {
         const response = await fetch('https://nf-api.onrender.com/api/v1/holidaze/venues?sort=created&sortOrder=desc&&_owner=true&_bookings=true')
         const data = await response.json()
         console.log(data);
         dispatch(SET_VENUES(data))
+        dispatch(setLoadingState(false))
     } catch(e) {
+        dispatch(setLoadingState(false))
         console.log(e);
     }
 }
 
 export const fetchSingleVenue = (id) => async (dispatch) => {
+    dispatch(setLoadingState(true))
     try {
         const response = await fetch(`https://nf-api.onrender.com/api/v1/holidaze/venues/${id}?_owner=true&_bookings=true`)
         const data = await response.json()
         console.log(data);
         dispatch(SET_SINGLE_VENUE(data))
+        dispatch(setLoadingState(false))
     } catch(e) {
+        dispatch(setLoadingState(false))
         console.log(e);
     }
 }
