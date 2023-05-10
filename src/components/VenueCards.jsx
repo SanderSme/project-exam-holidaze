@@ -1,4 +1,6 @@
 import StarRating from "./StarRating"
+import { faImage } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const VenueCards = (props) => {
   return (
@@ -9,7 +11,8 @@ const VenueCards = (props) => {
           <p className="absolute bottom-2 left-2 text-white font-semibold text-lg z-30">${props.price}</p>
           {props.sticker}
           </div>
-            <img src={props.media} alt="venue" className='w-full h-full object-cover rounded' />
+          {props.media ? <img src={props.media} alt="venue" className='w-full h-full object-cover rounded' /> : <FontAwesomeIcon icon={faImage} className="w-full h-full object-cover text-gray-200"/>}
+            
         </div>
         <div className='flex flex-col h-full md:h-28 justify-between w-1/2 md:w-full'>
             <div>

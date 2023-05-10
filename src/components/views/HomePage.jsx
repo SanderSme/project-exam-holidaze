@@ -71,7 +71,7 @@ const HomePage = () => {
                     <button
                         key={page}
                         onClick={() => setCurrentPage(page)}
-                        className={`mx-2 w-8 h-8 rounded-full hover:bg-[#A2D9FF] hover:text-black text-sm ${
+                        className={`md:mx-1 lg:mx-2 w-6 h-6 md:w-8 md:h-8 rounded-full hover:bg-[#A2D9FF] hover:text-black text-xs md:text-sm ${
                             currentPage === page && "bg-[#125C85] text-white"
                         }`}
                         >
