@@ -6,6 +6,7 @@ import Login from "../components/views/Login"
 import NewVenue from "../components/views/NewVenue"
 import Profile from "../components/views/Profile"
 import UpdateVenue from "../components/views/UpdateVenue"
+import SearchResults from "../components/views/SearchResults"
 
 const Router = () => {
   return (
@@ -18,6 +19,7 @@ const Router = () => {
             <Route path="/register" element={<Register/>}/>
             <Route path="/login" element={<Login/>}/>
             <Route path="/update/:id" element={<UpdateVenue/>}/>
+            <Route path="/search-results" element={<SearchResults/>}/>
         </Routes>
     </>
   )
