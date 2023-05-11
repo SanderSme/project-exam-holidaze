@@ -105,7 +105,7 @@ const UpdateVenue = () => {
             setMediaArray(newMediaArray);
           }
   return (
-    <div className="max-w-7xl w-11/12 mx-auto">
+    <div className="max-w-7xl w-11/12 mx-auto mt-32">
         {singleVenue && <><div>
             <h1 className='text-2xl mt-8'>Update Venue</h1>
         </div>

@@ -12,6 +12,7 @@ import { deleteBooking } from '../../store/modules/venuesSlice';
 import { useFormik } from "formik"
 import * as Yup from 'yup'
 import { updateLocalStorrage } from '../../utils/Storrage';
+import Error from '../layout/Error'
 
 const accessToken = localStorage.getItem('accessToken')
 const validationSchema = Yup.object().shape({
@@ -97,11 +98,16 @@ function deleteBookingByID() {
 }
 }
 
-const [activeTab, setActiveTab] = useState("venues")
+const venueManager = localStorage.getItem('venueManager')
+
+const [activeTab, setActiveTab] = useState(venueManager === "true" ? "venues" : "bookings")
+
+const {isError} = useSelector(state => state.error);
+const {errorMessage} = useSelector(state => state.error);
 
   return (
-      <div className="max-w-7xl w-11/12 mx-auto">
-        {singleProfile && <><div className="w-full h-[300px] bg-black rounded-b">
+      <div className="max-w-7xl w-11/12 mx-auto mt-28">
+        {isError ? <Error message={errorMessage}/> : <>{singleProfile && <><div className="w-full h-[200px] md:h-[300px] bg-black rounded-b">
           <img src={profileHeroImg} alt="profile" className='w-full h-full object-cover rounded-b' />
         </div>
         <div className='relative mb-32'>
@@ -113,28 +119,28 @@ const [activeTab, setActiveTab] = useState("venues")
                 <FontAwesomeIcon icon={faCamera} className='text-2xl'/>
               </button>
             </div>
-            <form id='changeAvatarInput' onSubmit={formik.handleSubmit} className='w-96 h-8 border p-1 border-black rounded bg-white flex gap-1 items-center hidden'>
+            
+            <p className='text-2xl'>{singleProfile.name}</p>
+          </div>
+          <form id='changeAvatarInput' onSubmit={formik.handleSubmit} className='absolute top-28 w-full md:w-96 h-8 border p-1 border-black rounded bg-white flex gap-1 items-center hidden'>
               <input type="text" onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                         value={formik.values.avatar || ""} name='avatar' placeholder='Change your avatar' className='w-full'/>
               <button type='submit' className='px-3 rounded bg-[#125C85] text-white'>Change</button>
             </form>
             {formik.touched.avatar && formik.errors.avatar ? <div className='text-red-600'>{formik.errors.avatar}</div> : null}
-            <p className='text-2xl'>{singleProfile.name}</p>
-          </div>
-          
         </div>
         <div className="flex gap-8 items-end">
-        <button
+        {venueManager === "true" ? <><button
           type="button"
-          className={`text-xl mt-4 ${
+          className={`text-xl mt-8 ${
             activeTab === "venues" ? "font-semibold text-black" : "font-normal text-[#00000070]"
           }`}
           onClick={() => setActiveTab("venues")}
         >
-          My Venues
+          My Venues ({singleProfile._count.venues})
         </button>
-        <div className="w-[1px] h-8 bg-[#00000050]"></div>
+        <div className="w-[1px] h-8 bg-[#00000050]"></div></> : null}
         <button
           type="button"
           className={`text-xl mt-4 ${
@@ -142,12 +148,12 @@ const [activeTab, setActiveTab] = useState("venues")
           }`}
           onClick={() => setActiveTab("bookings")}
         >
-          My Bookings
+          My Bookings ({singleProfile._count.bookings})
         </button>
       </div>
         <div className='w-full h-[1px] bg-gray-400 mb-8'></div>
         <div className='flex flex-wrap justify-center md:justify-start md:gap-6'>
-          {activeTab === "venues" && (
+          {venueManager === "true" ? <>{activeTab === "venues" && (
             <>
               {singleProfile.venues.length ? singleProfile.venues.map((venue) => (
                 <div key={venue.id} className='relative'>
@@ -162,13 +168,14 @@ const [activeTab, setActiveTab] = useState("venues")
                 </div>
               )) : <div className='flex justify-center w-full mt-12 mb-24'><p className='text-2xl italic text-gray-600'>You have no Venues</p></div>}
             </>
-          )}
+          )}</> : null }
+          
           {activeTab === "bookings" && (
             <>
               {singleProfile.bookings.length ? singleProfile.bookings.map((booking) => (
                 <div key={booking.id} className='flex gap-4 relative'>
                   <Link to={`/venue/${booking.venue.id}`}>
-                  <div className='w-[373px] md:w-[255px] flex gap-4 md:gap-0 md:flex-col h-[190px] md:h-[369px] p-2 bg-white rounded mb-8 md:mb-12 shadow hover:scale-110 hover:cursor-pointer relative'>
+                  <div className='w-[350px] md:w-[255px] flex gap-4 md:gap-0 md:flex-col h-[190px] md:h-[369px] p-2 bg-white rounded mb-8 md:mb-12 shadow hover:cursor-pointer relative'>
                         <div className='w-[190px] md:w-full h-[170px] md:h-[236px] relative'>
                           <div className="absolute left-0 right-0 bottom-0 top-[50%] bg-gradient-to-b from-[#00000000] to-[#00000070] rounded">
                           <p className="absolute bottom-2 left-2 text-white font-semibold text-lg z-30">${booking.venue.price}</p>
@@ -194,7 +201,7 @@ const [activeTab, setActiveTab] = useState("venues")
                         </div>
                     </div>
                   </Link>
-                  <button type='button' className='absolute top-[-12px] right-[-12px] text-xl text-[#125C85] bg-[#A2D9FF] h-8 w-8 flex items-center justify-center rounded-full' data-id={venue.id} onClick={() => toggleVenueOverlay(venue.id)}><FontAwesomeIcon icon={faEllipsis}/></button>
+                  <button type='button' className='absolute top-[-12px] right-[-12px] text-xl text-[#125C85] bg-[#A2D9FF] h-8 w-8 flex items-center justify-center rounded-full' data-id={booking.id} onClick={() => toggleVenueOverlay(booking.id)}><FontAwesomeIcon icon={faEllipsis}/></button>
                   <div className={`venueOverlay w-fit h-fit px-6 py-4 bg-[#125C85] absolute rounded top-6 right-0 text-sm text-white hidden`} data-id={booking.id}>
                     <Link to="/"> <p className='mb-4 hover:underline'>Edit booking</p></Link>
                     <button type='button' className='deleteBookingBtn hover:underline' onClick={deleteBookingByID} data-id={booking.id}>Delete booking</button>
@@ -205,7 +212,8 @@ const [activeTab, setActiveTab] = useState("venues")
             </>
           )}
         </div>
-      </>} 
+      </>} </>}
+        
     </div>
   )
 }

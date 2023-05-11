@@ -60,7 +60,7 @@ const Header = () => {
         window.location.href = "/login"
       }
   return (
-    <div className="w-full h-28 bg-gradient-to-b from-[#125C85] to-[#307095]">
+    <div className="fixed z-40 w-full h-28 bg-gradient-to-b from-[#125C85] to-[#307095]">
         <div className="max-w-7xl w-11/12 h-full mx-auto flex flex-col justify-between">
             <div className='h-[70px] w-full flex justify-between items-center md:items-end relative'>
                 <button className='h-10 w-10 p-1 text-[#F5F9FF] rounded md:hidden' id='burgerBtn' onClick={displayNavBar}>

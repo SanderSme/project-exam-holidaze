@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { setLoadingState } from "./loaderSlice";
+import { setError } from "./errorSlice"
 
 const venuesSlice = createSlice({
     name: 'venues',
@@ -68,7 +69,7 @@ export const fetchVenues = () => async (dispatch) => {
         dispatch(setLoadingState(false))
     } catch(e) {
         dispatch(setLoadingState(false))
-        console.log(e);
+        dispatch(setError(true, e.message))
     }
 }
 
@@ -82,7 +83,27 @@ export const fetchSingleVenue = (id) => async (dispatch) => {
         dispatch(setLoadingState(false))
     } catch(e) {
         dispatch(setLoadingState(false))
-        console.log(e);
+        dispatch(setError(true, e.message))
+    }
+}
+
+export const fetchSingleBooking = (id) => async (dispatch) => {
+    dispatch(setLoadingState(true))
+    try {
+        const response = await fetch(`https://nf-api.onrender.com/api/v1/holidaze/bookings/${id}?_customer=true`, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`
+            }
+        })
+        const data = await response.json()
+        console.log(data);
+        dispatch(SET_SINGLE_BOOKING(data))
+        dispatch(setLoadingState(false))
+    } catch(e) {
+        dispatch(setLoadingState(false))
+        dispatch(setError(true, e.message))
     }
 }
 
@@ -101,7 +122,7 @@ export const newVenue = (venueData) => async (dispatch) => {
         dispatch(SET_CREATE_VENUE(data))
         window.location.href = '/';
     } catch(e) {
-        console.log(e);
+        dispatch(setError(true, e.message))
     }
 }
 
@@ -120,7 +141,7 @@ export const updateVenue = (id, venueData) => async (dispatch) => {
         dispatch(SET_UPDATE_VENUE(data))
         window.location.href = "/profile";
     } catch(e) {
-        console.log(e);
+        dispatch(setError(true, e.message))
     }
 }
 

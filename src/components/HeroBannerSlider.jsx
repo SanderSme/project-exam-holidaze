@@ -1,10 +1,10 @@
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import HeroImg4 from '../../assets/HeroImg4.jpg'
-import HeroImg3 from '../../assets/HeroImg3.jpg'
-import HeroImg2 from '../../assets/HeroImg2.jpg'
-import HeroImg1 from '../../assets/HeroImg1.jpg'
+import HeroImg4 from '../assets/HeroImg4.jpg'
+import HeroImg3 from '../assets/HeroImg3.jpg'
+import HeroImg2 from '../assets/HeroImg2.jpg'
+import HeroImg1 from '../assets/HeroImg1.jpg'
 
 
 const HeroBannerSlider = () => {

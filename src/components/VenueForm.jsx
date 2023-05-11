@@ -7,7 +7,7 @@ import { useState } from "react";
 
 const validationSchema = Yup.object().shape({
     name: Yup.string().min(6, "Must be 6 chars or more").max(50, "Can not be longer than 50 chars").required('Required'),
-    description: Yup.string().min(6, "Must be 6 chars or more").max(1000, "Can not be longer than 1000 chars").required('Required'),
+    description: Yup.string().min(6, "Must be 6 chars or more").max(2000, "Can not be longer than 2000 chars").required('Required'),
     media: Yup.string()
     .url('Invalid URL')
     .matches(/\.(gif|jpe?g|png)$/i, 'Invalid image URL'),
