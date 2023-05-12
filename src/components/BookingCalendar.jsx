@@ -1,8 +1,9 @@
-import {useState, useEffect} from 'react';
-import Calendar from 'react-calendar'; 
+import { useState, useEffect } from 'react';
+import Calendar from 'react-calendar';
 import './BookingCalendar.css'
 import { bookVenue } from '../store/modules/venuesSlice';
 import { useDispatch } from 'react-redux';
+import BookingConfirmation from './BookingConfirmation';
 
 const BookingCalendar = (props) => {
   const dispatch = useDispatch();
@@ -22,7 +23,7 @@ const BookingCalendar = (props) => {
     setStartDate(value[0]);
     setEndDate(value[1]);
   };
-  
+
   const numberOfNights = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
 
   const handleGuestsChange = (event) => {
@@ -32,7 +33,7 @@ const BookingCalendar = (props) => {
   let disabledDateRanges = [];
 
   function getDisabledDateRanges(arr) {
-  
+
     arr.forEach((booking) => {
       const start = new Date(booking.dateFrom);
       const end = new Date(booking.dateTo);
@@ -45,22 +46,24 @@ const BookingCalendar = (props) => {
   }
 
   getDisabledDateRanges(props.bookingsArray)
-    const errorMessage = document.getElementById("errorMessage")
-    const overlappingRange = disabledDateRanges.find(disabledRange =>
-      (startDate >= disabledRange.start && startDate <= disabledRange.end) ||
-      (endDate >= disabledRange.start && endDate <= disabledRange.end) ||
-      (startDate < disabledRange.start && endDate > disabledRange.end)
-    );
-    if (startDate && endDate && overlappingRange) {
-      setStartDate(null);
-      setEndDate(null);
-      errorMessage.classList.remove('hidden')
-      return;
-    }
-    
+  const errorMessage = document.getElementById("errorMessage")
+  const overlappingRange = disabledDateRanges.find(disabledRange =>
+    (startDate >= disabledRange.start && startDate <= disabledRange.end) ||
+    (endDate >= disabledRange.start && endDate <= disabledRange.end) ||
+    (startDate < disabledRange.start && endDate > disabledRange.end)
+  );
+  if (startDate && endDate && overlappingRange) {
+    setStartDate(null);
+    setEndDate(null);
+    errorMessage.classList.remove('hidden')
+    return;
+  }
 
+
+  const bookingConfirmation = document.getElementById('bookingConfirmation')
+  const bookingForm = document.getElementById('bookingForm')
   function sendBooking() {
-    
+
     const venueData = {
       dateFrom: `${startDate}`,
       dateTo: `${endDate}`,
@@ -68,44 +71,48 @@ const BookingCalendar = (props) => {
       venueId: `${props.id}`
     }
     dispatch(bookVenue(venueData));
+    bookingForm.classList.add('hidden')
+    bookingConfirmation.classList.remove('hidden')
   }
 
   return (
-    <div className='flex w-full justify-around'>
+    <>
+    <div id='bookingForm' className='flex w-full justify-around'>
       <div className='w-1/2 p-4 bg-[#307095] h-fit rounded'>
         <div className='flex'>
-          <Calendar 
-          locale='en-EN'
-          onChange={handleCalendarChange}
-          selectRange={true} 
-          returnValue='range' 
-          tileClassName={({ date }) =>
-            date.toDateString() === new Date().toDateString() ? "today" : null
-          }
-          tileDisabled={({ date }) =>
-            disabledDateRanges.some(disabledDateRange =>
-              date >= disabledDateRange.start && date <= disabledDateRange.end
-            )
-          }
+          <Calendar
+            locale='en-EN'
+            onChange={handleCalendarChange}
+            selectRange={true}
+            returnValue='range'
+            tileClassName={({ date }) =>
+              date.toDateString() === new Date().toDateString() ? "today" : null
+            }
+            tileDisabled={({ date }) =>
+            date < new Date() ||
+              disabledDateRanges.some(disabledDateRange =>
+                date >= disabledDateRange.start && date <= disabledDateRange.end
+              )
+            }
           />
-        <div className='bg-white p-2 flex flex-col gap-4 rounded-r'>
-          <div className='flex items-center gap-2'>
-            <div className='w-8 h-8 rounded bg-[#a2d9ff]'></div>
-            <p>Today</p>
+          <div className='bg-white p-2 flex flex-col gap-4 rounded-r'>
+            <div className='flex items-center gap-2'>
+              <div className='w-8 h-8 rounded bg-[#a2d9ff]'></div>
+              <p>Today</p>
+            </div>
+            <div className='flex items-center gap-2'>
+              <div className='w-8 h-8 rounded bg-[#DDFECA]'></div>
+              <p>Available</p>
+            </div>
+            <div className='flex items-center gap-2'>
+              <div className='w-8 h-8 rounded bg-[#FFC0BE]'></div>
+              <p>Booked</p>
+            </div>
+            <div className='flex items-center gap-2'>
+              <div className='w-8 h-8 rounded bg-[#FFC107]'></div>
+              <p>Selected</p>
+            </div>
           </div>
-          <div className='flex items-center gap-2'>
-            <div className='w-8 h-8 rounded bg-[#DDFECA]'></div>
-            <p>Available</p>
-          </div>
-          <div className='flex items-center gap-2'>
-            <div className='w-8 h-8 rounded bg-[#FFC0BE]'></div>
-            <p>Booked</p>
-          </div>
-          <div className='flex items-center gap-2'>
-            <div className='w-8 h-8 rounded bg-[#FFC107]'></div>
-            <p>Selected</p>
-          </div>
-        </div>
         </div>
         <p id="errorMessage" className='hidden text-red-400 font-semibold'>Chosen dates is already booked</p>
       </div>
@@ -147,6 +154,10 @@ const BookingCalendar = (props) => {
         </div>
       </div>
     </div>
+    <div id='bookingConfirmation' className='hidden'>
+      <BookingConfirmation/>
+    </div>
+    </>
   )
 }
 

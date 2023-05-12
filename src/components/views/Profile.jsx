@@ -101,7 +101,6 @@ function deleteBookingByID() {
 const venueManager = localStorage.getItem('venueManager')
 
 const [activeTab, setActiveTab] = useState(venueManager === "true" ? "venues" : "bookings")
-
 const {isError} = useSelector(state => state.error);
 const {errorMessage} = useSelector(state => state.error);
 
