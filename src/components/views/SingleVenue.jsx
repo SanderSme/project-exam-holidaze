@@ -47,7 +47,7 @@ const SingleVenue = () => {
                     <p className='text-gray-500 italic'>Posted on: {new Date(singleVenue.created).toLocaleDateString()}</p>
                 </div>
                 <Slider {...settings}>
-                {singleVenue.media.map((media) => (
+                {singleVenue.media && singleVenue.media.map((media) => (
                 <div key={media} className='h-[350px] w-full mt-2 rounded'>
                     <img src={media} alt="venue" className='h-full w-full md:w-auto object-cover mx-auto rounded shadow'/>
                 </div>
@@ -61,7 +61,7 @@ const SingleVenue = () => {
                     <p className='w-full mt-8 md:mt-0 md:w-2/3'>{singleVenue.description}</p>
                     <VenueInformation name={singleVenue.owner.name} avatar={singleVenue.owner.avatar} price={singleVenue.price} maxGuests={singleVenue.maxGuests} wifi={singleVenue.meta.wifi} parking={singleVenue.meta.parking} breakfast={singleVenue.meta.breakfast} pets={singleVenue.meta.pets} address={singleVenue.location.address} city={singleVenue.location.city} zip={singleVenue.location.zip} country={singleVenue.location.country} continent={singleVenue.location.continent}/>
                 </div>
-                <div className='mt-8'>
+                <div className='mt-8 mb-24'>
                 {singleVenue.owner.name === userName ?
                     <>
                         <h1 className='text-2xl mt-4'>Bookings</h1>
@@ -77,11 +77,11 @@ const SingleVenue = () => {
                             </div>
                         }
                     </> :
-                    <>
+                    <div>
                         <h1 className='text-2xl mt-4'>Availability</h1>
                         <div className='w-full h-[1px] bg-gray-400 mb-8'></div>
-                        <BookingCalendar/>
-                    </>
+                        <BookingCalendar maxGuests={singleVenue.maxGuests} price={singleVenue.price} id={singleVenue.id} bookingsArray={singleVenue.bookings}/>
+                    </div>
                 }
                 </div>
         </>}

@@ -20,7 +20,7 @@ const VenueInformation = (props) => {
             <div className='h-[1px] w-full bg-[#ffffff40] my-2'></div>
                 <div className='flex w-full justify-between mt-4'>
                     <p className='font-semibold'>Price:</p>
-                    <p>${props.price} / night</p>
+                    <p>${props.price} / day</p>
                 </div>
                 <div className='h-[1px] w-full bg-[#ffffff20] my-2'></div>
                 <div className='flex w-full justify-between mt-4'>

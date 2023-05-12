@@ -10,6 +10,7 @@ const venuesSlice = createSlice({
         cheapestHouses:[],
         topRatedHouses:[],
         createVenue: null,
+        bookVenue: null,
     },
     reducers: {
         SET_VENUES: (state, action) => {
@@ -48,6 +49,9 @@ const venuesSlice = createSlice({
         SET_UPDATE_VENUE: (state, action) => {
             state.createVenue = action.payload
         },
+        SET_BOOK_VENUE: (state, action) => {
+            state.bookVenue = action.payload
+        },
     }
 })
 
@@ -57,6 +61,7 @@ const {SET_VENUES} = venuesSlice.actions
 const {SET_SINGLE_VENUE} = venuesSlice.actions
 const {SET_CREATE_VENUE} = venuesSlice.actions
 const {SET_UPDATE_VENUE} = venuesSlice.actions
+const {SET_BOOK_VENUE} = venuesSlice.actions
 const accessToken = localStorage.getItem("accessToken")
 
 export const fetchVenues = () => async (dispatch) => {
@@ -107,6 +112,7 @@ export const fetchSingleBooking = (id) => async (dispatch) => {
     }
 }
 
+
 export const newVenue = (venueData) => async (dispatch) => {
     try {
         const response = await fetch('https://nf-api.onrender.com/api/v1/holidaze/venues', {
@@ -140,6 +146,24 @@ export const updateVenue = (id, venueData) => async (dispatch) => {
         console.log(data);
         dispatch(SET_UPDATE_VENUE(data))
         window.location.href = "/profile";
+    } catch(e) {
+        dispatch(setError(true, e.message))
+    }
+}
+
+export const bookVenue = (venueData) => async (dispatch) => {
+    try {
+        const response = await fetch(`https://nf-api.onrender.com/api/v1/holidaze/bookings`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`
+            },
+            body: JSON.stringify(venueData)
+        })
+        const data = await response.json()
+        console.log(data);
+        dispatch(SET_BOOK_VENUE(data))
     } catch(e) {
         dispatch(setError(true, e.message))
     }
