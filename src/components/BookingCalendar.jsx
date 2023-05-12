@@ -77,9 +77,9 @@ const BookingCalendar = (props) => {
 
   return (
     <>
-    <div id='bookingForm' className='flex w-full justify-around'>
-      <div className='w-1/2 p-4 bg-[#307095] h-fit rounded'>
-        <div className='flex'>
+    <div id='bookingForm' className='flex flex-col lg:flex-row w-full justify-around'>
+      <div className='w-full lg:w-1/2 p-4 bg-[#307095] h-fit rounded'>
+        <div className='md:flex'>
           <Calendar
             locale='en-EN'
             onChange={handleCalendarChange}
@@ -95,7 +95,7 @@ const BookingCalendar = (props) => {
               )
             }
           />
-          <div className='bg-white p-2 flex flex-col gap-4 rounded-r'>
+          <div className='bg-white p-2 flex flex-wrap md:flex-col gap-4 rounded-r'>
             <div className='flex items-center gap-2'>
               <div className='w-8 h-8 rounded bg-[#a2d9ff]'></div>
               <p>Today</p>
@@ -116,7 +116,7 @@ const BookingCalendar = (props) => {
         </div>
         <p id="errorMessage" className='hidden text-red-400 font-semibold'>Chosen dates is already booked</p>
       </div>
-      <div className='w-1/3'>
+      <div className='w-full lg:w-1/3 mt-4 lg:mt-0'>
         <div className='flex flex-col gap-8'>
           <div className='flex flex-col'>
             <label htmlFor="guests">Guests:</label>
@@ -128,7 +128,7 @@ const BookingCalendar = (props) => {
             <h2 className='font-semibold text-lg'>Summary</h2>
             <div className='flex justify-between w-full items-center'>
               <p className='italic'>Dates:</p>
-              <div className="italic">
+              <div className="italic md:flex md:gap-2 lg:block lg:gap-0">
                 <p>{startDate?.toLocaleDateString()}</p>
                 <p>To</p>
                 <p>{endDate?.toLocaleDateString()}</p>
