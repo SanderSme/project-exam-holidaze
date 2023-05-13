@@ -132,7 +132,7 @@ const {errorMessage} = useSelector(state => state.error);
         <div className="flex gap-8 items-end">
         {venueManager === "true" ? <><button
           type="button"
-          className={`text-xl mt-8 ${
+          className={`text-lg md:text-xl mt-8 ${
             activeTab === "venues" ? "font-semibold text-black" : "font-normal text-[#00000070]"
           }`}
           onClick={() => setActiveTab("venues")}
@@ -142,7 +142,7 @@ const {errorMessage} = useSelector(state => state.error);
         <div className="w-[1px] h-8 bg-[#00000050]"></div></> : null}
         <button
           type="button"
-          className={`text-xl mt-4 ${
+          className={`text-lg md:text-xl mt-4 ${
             activeTab === "bookings" ? "font-semibold text-black" : "font-normal text-[#00000070]"
           }`}
           onClick={() => setActiveTab("bookings")}
