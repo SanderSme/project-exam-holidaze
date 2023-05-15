@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
 import { fetchSingleVenue } from '../../store/modules/venuesSlice'
 import { useParams } from "react-router-dom"
 import { useEffect } from "react";
@@ -12,6 +12,7 @@ import BookingsCard from '../BookingsCard';
 import Error from '../layout/Error';
 
 const SingleVenue = () => {
+    const accessToken = localStorage.getItem('accessToken')
     const userName = localStorage.getItem('userName')
     let {id} = useParams()
     const dispatch = useDispatch()
@@ -54,15 +55,15 @@ const SingleVenue = () => {
                 ))}
                 </Slider>
                 <div>
-                    <h1 className='text-3xl mt-12'>{singleVenue.name}</h1>
+                    <h1 className='text-3xl mt-12 break-words'>{singleVenue.name}</h1>
                 </div>
                 <div className='w-full h-[1px] bg-gray-300 mb-8'></div>
                 <div className='flex flex-col-reverse md:flex-row w-full justify-between'>
-                    <p className='w-full mt-8 md:mt-0 md:w-2/3'>{singleVenue.description}</p>
+                    <p className='w-full mt-8 md:mt-0 md:w-2/3 break-words'>{singleVenue.description}</p>
                     <VenueInformation name={singleVenue.owner.name} avatar={singleVenue.owner.avatar} price={singleVenue.price} maxGuests={singleVenue.maxGuests} wifi={singleVenue.meta.wifi} parking={singleVenue.meta.parking} breakfast={singleVenue.meta.breakfast} pets={singleVenue.meta.pets} address={singleVenue.location.address} city={singleVenue.location.city} zip={singleVenue.location.zip} country={singleVenue.location.country} continent={singleVenue.location.continent}/>
                 </div>
                 <div className='mt-8 mb-24'>
-                {singleVenue.owner.name === userName ?
+                {accessToken ? <>{singleVenue.owner.name === userName ?
                     <>
                         <h1 className='text-2xl mt-4'>Bookings</h1>
                         <div className='w-full h-[1px] bg-gray-400 mb-8'></div>
@@ -82,7 +83,14 @@ const SingleVenue = () => {
                         <div className='w-full h-[1px] bg-gray-400 mb-8'></div>
                         <BookingCalendar maxGuests={singleVenue.maxGuests} price={singleVenue.price} id={singleVenue.id} bookingsArray={singleVenue.bookings}/>
                     </div>
-                }
+                }</> : <div>
+                <h1 className='text-2xl mt-4'>Availability</h1>
+                <div className='w-full h-[1px] bg-gray-400 mb-8'></div>
+                <div className='flex justify-center w-full mt-12 mb-24'>
+                    <p className='text-xl italic text-gray-600'><Link to={'/login'} className='underline text-blue-600'>Sing in</Link> to make reservation</p>
+                </div>
+            </div>}
+                
                 </div>
         </>}
     </div>}

@@ -8,7 +8,7 @@ export default defineConfig({
     react(),
     copy({
       targets: [{ src: 'public/_redirects', dest: 'build' }]
-    })
+    }),
   ],
   build: {
     rollupOptions: {

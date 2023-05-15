@@ -10,7 +10,7 @@ import SearchBar from '../SearchBar'
 import { useDispatch } from 'react-redux'
 import { fetchVenues } from '../../store/modules/venuesSlice'
 import { useState, useEffect} from 'react'
-import SearchResults from '../SearchResultList'
+import SearchResultsList from '../SearchResultList'
 import { NavLink } from 'react-router-dom'
 import { clearStorrage } from '../../utils/Storrage'
 
@@ -23,10 +23,10 @@ const Header = () => {
         document.getElementById("burgerBtn").classList.toggle("text-[#F5F9FF]")
         document.querySelector('body').classList.toggle("overflow-hidden")
       }
-    const dispatch = useDispatch()
-    useEffect(() => {
-        dispatch(fetchVenues())
-    }, [dispatch])
+      const dispatch = useDispatch()
+      useEffect(() => {
+          dispatch(fetchVenues())
+      }, [dispatch])
       const [results, setResults] = useState([])
 
       const accessToken = localStorage.getItem('accessToken')
@@ -69,7 +69,7 @@ const Header = () => {
                 <img src={Logo} alt="logo" className='h-full absolute md:relative left-[50%] translate-x-[-50%] md:left-auto md:translate-x-0'/>
                 <div className='flex items-center gap-2'>
                 <SearchBar setResults={setResults}/>
-                <SearchResults results={results}/>
+                <SearchResultsList results={results}/>
                 {accessToken ? (
                   <>
               <NavLink to={"/profile"} className="flex items-center gap-2">

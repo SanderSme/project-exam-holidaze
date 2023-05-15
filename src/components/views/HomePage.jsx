@@ -55,7 +55,7 @@ const HomePage = () => {
                 .map((venue) => (
                     <div key={venue.id}>
                         <Link to={`/venue/${venue.id}`}>
-                        <VenueCards media={venue.media[0]} name={venue.name} price={venue.price} location={venue.location.city} hover="hover:scale-110" rating={venue.rating} sticker={cheapestHouses && cheapestHouses.find(house => house.id === venue.id) ? <LowestPrice /> : null} sticker2={topRatedHouses && topRatedHouses.find(house => house.id === venue.id) ? <BestRated /> : null}/>
+                        <VenueCards media={venue.media[0]} name={venue.name} price={venue.price} location={venue.location.city} hover="md:hover:scale-110" rating={venue.rating} sticker={cheapestHouses && cheapestHouses.find(house => house.id === venue.id) ? <LowestPrice /> : null} sticker2={topRatedHouses && topRatedHouses.find(house => house.id === venue.id) ? <BestRated /> : null}/>
                         </Link>
                     </div>
                 ))}

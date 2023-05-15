@@ -171,7 +171,10 @@ const {errorMessage} = useSelector(state => state.error);
           
           {activeTab === "bookings" && (
             <>
-              {singleProfile.bookings.length ? singleProfile.bookings.map((booking) => (
+              {singleProfile.bookings.length ? singleProfile.bookings
+              .slice()
+              .sort((a, b) => new Date(a.dateFrom) - new Date(b.dateFrom))
+              .map((booking) => (
                 <div key={booking.id} className='flex gap-4 relative'>
                   <Link to={`/venue/${booking.venue.id}`}>
                   <div className='w-[350px] md:w-[255px] flex gap-4 md:gap-0 md:flex-col h-[190px] md:h-[369px] p-2 bg-white rounded mb-8 md:mb-12 shadow hover:cursor-pointer relative'>
