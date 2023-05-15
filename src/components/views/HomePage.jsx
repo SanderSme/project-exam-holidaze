@@ -43,7 +43,7 @@ const HomePage = () => {
             {isError ? <Error message={errorMessage}/> : <><div className='flex justify-between items-center relative'>
                 <h1 className='text-2xl mt-4'>Venues</h1>
                 <button onClick={displayFilter} className='px-4 h-[30px] rounded bg-[#125C85] text-white z-30'><FontAwesomeIcon icon={faFilter}/> Filter</button>
-                <div id='filter' className='absolute h-fit w-96 p-8 bg-gradient-to-b from-[#125C85] to-[#307095] rounded right-0 top-12 z-40 text-white hidden'>
+                <div id='filter' className='absolute h-fit w-full md:w-96 p-8 bg-gradient-to-b from-[#125C85] to-[#307095] rounded right-0 top-12 z-30 text-white hidden'>
                     <Filter/>
                 </div>
             </div>

@@ -20,16 +20,16 @@ const HeroBannerSlider = () => {
   return (
     <>
         <Slider {...settings}>
-        <div className='h-[300px] md:h-[500px] relative'>
+        <div className='h-[300px] md:h-[500px] relative w-full'>
             <img src={HeroImg4} alt="herobanner" className='w-full h-full object-cover object-center' />
         </div>
-        <div className='h-[300px] md:h-[500px] relative'>
+        <div className='h-[300px] md:h-[500px] relative w-full'>
             <img src={HeroImg3} alt="herobanner" className='w-full h-full object-cover object-center' />
         </div>
-        <div className='h-[300px] md:h-[500px] relative'>
+        <div className='h-[300px] md:h-[500px] relative w-full'>
             <img src={HeroImg2} alt="herobanner" className='w-full h-full object-cover object-center' />
         </div>
-        <div className='h-[300px] md:h-[500px] relative'>
+        <div className='h-[300px] md:h-[500px] relative w-full'>
             <img src={HeroImg1} alt="herobanner" className='w-full h-full object-cover object-center' />
         </div>
         </Slider>
