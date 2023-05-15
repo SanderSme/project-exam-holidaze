@@ -3,6 +3,7 @@ import { useFormik } from "formik"
 import * as Yup from 'yup'
 import { newVenue } from '../store/modules/venuesSlice'
 import { useState } from "react";
+import fullStar from '../assets/fullStar.svg'
 
 
 const validationSchema = Yup.object().shape({
@@ -30,7 +31,7 @@ const VenueForm = () => {
             media: [],
             price: 1,
             maxGuests: 1,
-            rating: 5,
+            rating: 1,
             meta: {
                 wifi: false,
                 parking: false,
@@ -55,7 +56,7 @@ const VenueForm = () => {
                 media: mediaArray,
                 price: values.price,
                 maxGuests: values.maxGuests,
-                rating: 5,
+                rating: values.rating,
                 meta: {
                     wifi: values.wifi,
                     parking: values.parking,
@@ -132,16 +133,27 @@ const VenueForm = () => {
                     <label htmlFor="pricePerNight">Price per night</label>
                     <input type="number" name='price' id="pricePerNight" className="border-2 border-[#125C85] rounded p-1" onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        value={formik.values.price}/>
+                        value={formik.values.price}
+                        min="1"/>
                         {formik.touched.price && formik.errors.price ? <div className='text-red-600'>{formik.errors.price}</div> : null}
                 </div>
                 <div className="flex flex-col w-2/5">
                     <label htmlFor="maxGuests">Max guests</label>
                     <input type="number" name='maxGuests' id="maxGuests" className="border-2 border-[#125C85] rounded p-1" onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        value={formik.values.maxGuests}/>
+                        value={formik.values.maxGuests}
+                        min="1"/>
                         {formik.touched.maxGuests && formik.errors.maxGuests ? <div className='text-red-600'>{formik.errors.maxGuests}</div> : null}
                 </div>
+            </div>
+            <div className="flex flex-row gap-4 items-center">
+                    <label htmlFor="rating">I would give this venue</label>
+                    <input type="number" name='rating' id="rating" className="border-2 border-[#125C85] rounded p-1 w-12" onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.rating}
+                        max="5"
+                        min="1"/>
+                    <img src={fullStar} alt="rating" />
             </div>
             <div className="flex flex-col gap-4">
                 <div>
