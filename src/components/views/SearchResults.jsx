@@ -1,55 +1,38 @@
 import VenueCards from '../VenueCards'
-import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { fetchVenues } from '../../store/modules/venuesSlice'
+import { useState } from 'react'
+import { useSelector } from 'react-redux'
 import { Link } from "react-router-dom"
-import { faFilter } from '@fortawesome/free-solid-svg-icons'
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { LowestPrice, BestRated } from '../Stickers'
-import Filter from '../Filter'
 import Error from '../layout/Error'
 
 const SearchResults = () => {
-    const dispatch = useDispatch()
-    const {venues, cheapestHouses, topRatedHouses} = useSelector(state => state.venues)
+    const venuesFromLocalStorrage = localStorage.getItem('searchResults')
+    const searchResult = JSON.parse(venuesFromLocalStorrage)
     const [currentPage, setCurrentPage] = useState(1);
     const venuesPerPage = 12;
-    const totalPages = Math.ceil(venues.length / venuesPerPage);
-    let venuesToDisplay = venues
+    const totalPages = Math.ceil(searchResult.length / venuesPerPage);
     const {isError} = useSelector(state => state.error);
     const {errorMessage} = useSelector(state => state.error);
     const pages = [];
-    for (let i = 1; i <= Math.ceil(venues.length / venuesPerPage); i++) {
+    for (let i = 1; i <= Math.ceil(searchResult.length / venuesPerPage); i++) {
         pages.push(i);}
-
-    useEffect(() => {
-        dispatch(fetchVenues())
-    }, [dispatch])
-
-    function displayFilter() {
-        document.getElementById('filter').classList.toggle('hidden')
-    }
   return (
     <div className='mt-28'>
         <div className='max-w-7xl w-11/12 mx-auto'>
             {isError ? <Error message={errorMessage}/> : <><div className='flex justify-between items-center relative'>
                 <h1 className='text-2xl mt-4'>Search results:</h1>
-                <button onClick={displayFilter} className='px-4 h-[30px] rounded bg-[#125C85] text-white z-30'><FontAwesomeIcon icon={faFilter}/> Filter</button>
-                <div id='filter' className='absolute h-fit w-96 p-8 bg-gradient-to-b from-[#125C85] to-[#307095] rounded right-0 top-12 z-40 text-white hidden'>
-                    <Filter/>
-                </div>
             </div>
             <div className='w-full h-[1px] bg-gray-400 mb-8'>
             </div>
             <div className='flex flex-wrap justify-center md:justify-around md:gap-1'>
-                {venuesToDisplay
+            {searchResult.length === 0 ? <div className='flex flex-col items-center gap-4 justify-center w-full mt-12 mb-24'><p className='text-2xl italic text-gray-600'>No results matching your search</p><Link to={'/'} className='mb-24 underline'>Show all venues</Link></div> : searchResult
                 .slice((currentPage - 1) * venuesPerPage, currentPage * venuesPerPage)
                 .map((venue) => (
                     <div key={venue.id}>
                         <Link to={`/venue/${venue.id}`}>
-                        <VenueCards media={venue.media[0]} name={venue.name} price={venue.price} location={venue.location.city} hover="hover:scale-110" rating={venue.rating} sticker={cheapestHouses && cheapestHouses.find(house => house.id === venue.id) ? <LowestPrice /> : null} sticker2={topRatedHouses && topRatedHouses.find(house => house.id === venue.id) ? <BestRated /> : null}/>
+                        <VenueCards media={venue.media[0]} name={venue.name} price={venue.price} location={venue.location.city} hover="md:hover:scale-110" rating={venue.rating}/>
                         </Link>
                     </div>
                 ))}

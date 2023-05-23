@@ -16,6 +16,7 @@ const SearchBar = ({setResults}) => {
                 return value && venue && venue.name && venue.name.toLowerCase().includes(value)
             })
             setResults(searchResults)
+            localStorage.setItem('searchResults', JSON.stringify(searchResults))
             console.log('results: ', searchResults);
         })
     }

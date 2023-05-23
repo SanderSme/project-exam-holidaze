@@ -19,21 +19,38 @@ const HomePage = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const venuesPerPage = 12;
     const totalPages = Math.ceil(venues.length / venuesPerPage);
-    let venuesToDisplay = venues
+    const [venuesToDisplay, setVenuesToDisplay] = useState([]);
+    const [isFilterCleared, setIsFilterCleared] = useState(false);
     const {isError} = useSelector(state => state.error);
     const {errorMessage} = useSelector(state => state.error);
     const pages = [];
 
-    for (let i = 1; i <= Math.ceil(venues.length / venuesPerPage); i++) {
-        pages.push(i);}
+    for (let i = 1; i <= Math.ceil(venuesToDisplay.length / venuesPerPage); i++) {
+        pages.push(i);
+    }
 
     useEffect(() => {
         dispatch(fetchVenues())
     }, [dispatch])
 
+    useEffect(() => {
+        setVenuesToDisplay(venues)
+        setIsFilterCleared(false)
+    }, [venues])
+
+    function updateVenuesToDisplay(filteredVenues) {
+        setVenuesToDisplay(filteredVenues)
+    }
+
     function displayFilter() {
         document.getElementById('filter').classList.toggle('hidden')
     }
+
+    function clearFilter() {
+        setVenuesToDisplay(venues);
+        setIsFilterCleared(true);
+        document.getElementById('filter').classList.add('hidden')
+      }
 
 
   return (
@@ -43,9 +60,7 @@ const HomePage = () => {
             {isError ? <Error message={errorMessage}/> : <><div className='flex justify-between items-center relative'>
                 <h1 className='text-2xl mt-4'>Venues</h1>
                 <button onClick={displayFilter} className='px-4 h-[30px] rounded bg-[#125C85] text-white z-30'><FontAwesomeIcon icon={faFilter}/> Filter</button>
-                <div id='filter' className='absolute h-fit w-full md:w-96 p-8 bg-gradient-to-b from-[#125C85] to-[#307095] rounded right-0 top-12 z-30 text-white hidden'>
-                    <Filter/>
-                </div>
+                <Filter venue={venues} updateVenuesToDisplay={updateVenuesToDisplay} clearFilter={clearFilter} isFilterCleared={isFilterCleared}/>
             </div>
             <div className='w-full h-[1px] bg-gray-400 mb-8'>
             </div>
