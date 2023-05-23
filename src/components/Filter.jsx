@@ -34,16 +34,25 @@ const Filter = (props) => {
                     if (venue.price < filterData.minPrice ||
                         venue.price > filterData.maxPrice ||
                         venue.maxGuests < filterData.minGuests ||
-                        venue.maxGuests > filterData.maxGuests ||
-                        venue.meta.wifi !== filterData.wifi ||
-                        venue.meta.parking !== filterData.parking ||
-                        venue.meta.breakfast !== filterData.breakfast ||
-                        venue.meta.pets !== filterData.pets
+                        venue.maxGuests > filterData.maxGuests
                     ) {
                         return false;
-                    } else {
-                        return true;
+                    } 
+                    if(filterData.wifi && !venue.meta.wifi){
+                        return false;
                     }
+                    if (filterData.parking && !venue.meta.parking) {
+                        return false;
+                    }
+              
+                    if (filterData.breakfast && !venue.meta.breakfast) {
+                        return false;
+                    }
+              
+                    if (filterData.pets && !venue.meta.pets) {
+                        return false;
+                    }
+                    return true;
                 });
                 console.log(filteredVenues);
                 props.updateVenuesToDisplay(filteredVenues)
