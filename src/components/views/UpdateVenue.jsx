@@ -86,25 +86,26 @@ const UpdateVenue = () => {
               };
               dispatch(updateVenue(id, venueData))
             }
-        })
-        function pushToMediaArray() {
-            const mediaValue = document.getElementById('media').value
-            const urlRegex = /(ftp|http|https):\/\/[^ "]+$/;
-            if(urlRegex.test(mediaValue)) {
-                const newMediaArray = [...mediaArray, mediaValue];
-                setMediaArray(newMediaArray);
-                document.getElementById('media').value = '';
-            } else {
-                return null
-            }
-            
-        }
+    })
 
-        function deleteMedia(media) {
-            const newMediaArray = mediaArray.filter((item) => item !== media);
+    function pushToMediaArray() {
+        const mediaValue = document.getElementById('media').value
+        const urlRegex = /(ftp|http|https):\/\/[^ "]+$/;
+        if(urlRegex.test(mediaValue)) {
+            const newMediaArray = [...mediaArray, mediaValue];
             setMediaArray(newMediaArray);
+            document.getElementById('media').value = '';
+        } else {
+             return null
         }
+            
+    }
 
+    function deleteMedia(media) {
+        const newMediaArray = mediaArray.filter((item) => item !== media);
+        setMediaArray(newMediaArray);
+    }
+    
   return (
     <div className="max-w-7xl w-11/12 mx-auto mt-32">
         {singleVenue && 
