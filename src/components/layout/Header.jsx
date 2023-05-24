@@ -66,7 +66,9 @@ const Header = () => {
                 <button className='h-10 w-10 p-1 text-[#F5F9FF] rounded md:hidden' id='burgerBtn' onClick={displayNavBar}>
                     <FontAwesomeIcon icon={faBars} className='w-full h-full'/>
                 </button>
-                <img src={Logo} alt="logo" className='h-full absolute md:relative left-[50%] translate-x-[-50%] md:left-auto md:translate-x-0'/>
+                <NavLink to={'/'} className='h-full'>
+                  <img src={Logo} alt="logo" className='h-full absolute md:relative left-[50%] translate-x-[-50%] md:left-auto md:translate-x-0'/>
+                </NavLink>
                 <div className='flex items-center gap-2'>
                 <SearchBar setResults={setResults}/>
                 <SearchResultsList results={results}/>
@@ -91,7 +93,7 @@ const Header = () => {
                 </div>
             </div>
             <HeaderDesktopNavBar/>
-            <HamburgerMenu/>
+            <HamburgerMenu displayNavBar={displayNavBar}/>
         </div>
     </div>
   )

@@ -114,7 +114,7 @@ const BookingCalendar = (props) => {
             </div>
           </div>
         </div>
-        <p id="errorMessage" className='hidden text-red-400 font-semibold'>Chosen dates is already booked</p>
+        <p id="errorMessage" className='hidden text-red-400 font-semibold'>Chosen dates are already booked</p>
       </div>
       <div className='w-full lg:w-1/3 mt-4 lg:mt-0'>
         <div className='flex flex-col gap-8'>

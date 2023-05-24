@@ -26,10 +26,10 @@ const Filter = (props) => {
             }
             console.log(filterData);
             if(props.isFilterCleared) {
-                const filteredVenues = props.venue;
+                let filteredVenues = props.venue;
                 props.updateVenuesToDisplay(filteredVenues)
             } else {
-                const filteredVenues = props.venue.filter((venue) => {
+                let filteredVenues = props.venue.filter((venue) => {
                     document.getElementById('filter').classList.add('hidden')
                     if (venue.price < filterData.minPrice ||
                         venue.price > filterData.maxPrice ||
