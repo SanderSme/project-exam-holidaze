@@ -69,7 +69,6 @@ export const fetchVenues = () => async (dispatch) => {
     try {
         const response = await fetch('https://nf-api.onrender.com/api/v1/holidaze/venues?sort=created&sortOrder=desc&&_owner=true&_bookings=true')
         const data = await response.json()
-        console.log(data);
         dispatch(SET_VENUES(data))
         dispatch(setLoadingState(false))
     } catch(e) {
@@ -83,7 +82,6 @@ export const fetchSingleVenue = (id) => async (dispatch) => {
     try {
         const response = await fetch(`https://nf-api.onrender.com/api/v1/holidaze/venues/${id}?_owner=true&_bookings=true`)
         const data = await response.json()
-        console.log(data);
         dispatch(SET_SINGLE_VENUE(data))
         dispatch(setLoadingState(false))
     } catch(e) {
@@ -103,7 +101,6 @@ export const fetchSingleBooking = (id) => async (dispatch) => {
             }
         })
         const data = await response.json()
-        console.log(data);
         dispatch(SET_SINGLE_BOOKING(data))
         dispatch(setLoadingState(false))
     } catch(e) {
@@ -124,7 +121,6 @@ export const newVenue = (venueData) => async (dispatch) => {
             body: JSON.stringify(venueData)
         })
         const data = await response.json()
-        console.log(data);
         dispatch(SET_CREATE_VENUE(data))
         window.location.href = '/';
     } catch(e) {
@@ -143,7 +139,6 @@ export const updateVenue = (id, venueData) => async (dispatch) => {
             body: JSON.stringify(venueData)
         })
         const data = await response.json()
-        console.log(data);
         dispatch(SET_UPDATE_VENUE(data))
         window.location.href = "/profile";
     } catch(e) {
@@ -162,7 +157,6 @@ export const bookVenue = (venueData) => async (dispatch) => {
             body: JSON.stringify(venueData)
         })
         const data = await response.json()
-        console.log(data);
         dispatch(SET_BOOK_VENUE(data))
     } catch(e) {
         dispatch(setError(true, e.message))

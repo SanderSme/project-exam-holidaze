@@ -73,7 +73,6 @@ const VenueForm = () => {
                     lng: 0
                   }
               };
-              console.log(venueData);
               dispatch(newVenue(venueData))
             }
         })

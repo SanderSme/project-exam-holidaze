@@ -84,8 +84,6 @@ const UpdateVenue = () => {
                     lng: 0
                   }
               };
-              
-              console.log(venueData);
               dispatch(updateVenue(id, venueData))
             }
         })

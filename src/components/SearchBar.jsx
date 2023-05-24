@@ -17,7 +17,6 @@ const SearchBar = ({setResults}) => {
             })
             setResults(searchResults)
             localStorage.setItem('searchResults', JSON.stringify(searchResults))
-            console.log('results: ', searchResults);
         })
     }
 

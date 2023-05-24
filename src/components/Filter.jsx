@@ -24,7 +24,6 @@ const Filter = (props) => {
             breakfast: values.breakfast,
             pets: values.pets
             }
-            console.log(filterData);
             if(props.isFilterCleared) {
                 let filteredVenues = props.venue;
                 props.updateVenuesToDisplay(filteredVenues)
@@ -54,7 +53,6 @@ const Filter = (props) => {
                     }
                     return true;
                 });
-                console.log(filteredVenues);
                 props.updateVenuesToDisplay(filteredVenues)
             }
             }

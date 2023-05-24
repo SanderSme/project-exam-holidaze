@@ -40,7 +40,6 @@ const Profile = () => {
       const data = {
         avatar: values.avatar
       }
-      console.log(data);
       fetch(`https://nf-api.onrender.com/api/v1/holidaze/profiles/${name}/media`, {
         method: 'PUT',
         headers: {
@@ -56,7 +55,6 @@ const Profile = () => {
         return response.json()
     })
     .then(data => {
-        console.log(data);
         updateLocalStorrage(`https://nf-api.onrender.com/api/v1/holidaze/profiles/${name}`)
     })
     .catch(error => {

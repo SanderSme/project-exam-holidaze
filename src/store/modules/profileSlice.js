@@ -28,7 +28,6 @@ export const fetchSingleProfile = (name, profileData) => async (dispatch) => {
             body: JSON.stringify(profileData)
         })
         const data = await response.json()
-        console.log(data);
         dispatch(SET_SINGLE_PROFILE(data))
     } catch(e) {
         console.log(e);
@@ -50,7 +49,6 @@ export const logIn = (userData) => {
                 return response.json()
             })
             .then(data => {
-                console.log(data);
                 localStorage.setItem('userName', data.name)
                 localStorage.setItem('email', data.email)
                 localStorage.setItem('avatar', data.avatar)
@@ -78,7 +76,6 @@ export const registerUser = (userData) => {
                   return response.json()
               })
               .then(data => {
-                  console.log(data);
                 window.location.href = '/login';
               })
               .catch(error => {
