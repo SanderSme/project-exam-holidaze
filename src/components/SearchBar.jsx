@@ -11,6 +11,7 @@ const SearchBar = ({setResults}) => {
       }, []);
 
     const fetchData = (value) => {
+        value = value.toLowerCase();
         fetch('https://nf-api.onrender.com/api/v1/holidaze/venues').then((response) => response.json()).then((json) => {
             const searchResults = json.filter((venue) => {
                 return value && venue && venue.name && venue.name.toLowerCase().includes(value)
