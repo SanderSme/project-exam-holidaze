@@ -239,22 +239,22 @@ const UpdateVenue = () => {
                     <div className="flex flex-col gap-4">
                         <div>
                             <input type="checkbox" name='meta.wifi' id="wifi" onChange={formik.handleChange}
-                                value={formik.values.meta.wifi} checked={formik.values.meta.wifi}/>
+                                value={formik.values.meta.wifi}/>
                             <label htmlFor="wifi" className="ml-2">Wifi</label>
                         </div>
                         <div>
                             <input type="checkbox" name='meta.pets' id="pets" onChange={formik.handleChange}
-                                value={formik.values.meta.pets} checked={formik.values.meta.wifi}/>
+                                value={formik.values.meta.pets}/>
                             <label htmlFor="pets" className="ml-2">Pets</label>
                         </div>
                         <div>
                             <input type="checkbox" name='meta.breakfast' id="breakfast" onChange={formik.handleChange}
-                                value={formik.values.meta.breakfast} checked={formik.values.meta.wifi}/>
+                                value={formik.values.meta.breakfast}/>
                             <label htmlFor="breakfast" className="ml-2">Breakfast</label>
                         </div>
                         <div>
                             <input type="checkbox" name='meta.parking' id="parking" onChange={formik.handleChange}
-                                value={formik.values.meta.parking} checked={formik.values.meta.wifi}/>
+                                value={formik.values.meta.parking}/>
                             <label htmlFor="parking" className="ml-2">Parking</label>
                         </div>
                     </div>
