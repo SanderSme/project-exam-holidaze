@@ -28,7 +28,6 @@ const VenueForm = () => {
         initialValues:{
             name: "",
             description: "",
-            media: [],
             price: 1,
             maxGuests: 1,
             rating: 1,
