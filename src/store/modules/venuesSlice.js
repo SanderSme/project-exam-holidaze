@@ -140,9 +140,11 @@ export const updateVenue = (id, venueData) => async (dispatch) => {
         })
         const data = await response.json()
         dispatch(SET_UPDATE_VENUE(data))
+        dispatch(setLoadingState(false))
         window.location.href = "/profile";
     } catch(e) {
         dispatch(setError(true, e.message))
+        dispatch(setLoadingState(false))
     }
 }
 
