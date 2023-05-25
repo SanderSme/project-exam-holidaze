@@ -61,7 +61,9 @@ To install and set up the Holidaze Accommodation Booking Application, follow the
 
 1. Clone the repository from GitHub:
 
-git clone https://github.com/SanderSme/project-exam-holidaze
+# Clone the repository from GitHub
+git clone https://github.com/your-username/holidaze-booking-app.git
+
 
 
 2. Navigate to the project directory:
