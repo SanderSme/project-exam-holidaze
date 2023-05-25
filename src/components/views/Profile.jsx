@@ -114,15 +114,15 @@ const Profile = () => {
                 </div>
                 <div className='relative mb-32'>
                   <div className='absolute top-[-2rem] left-0 md:left-20 flex items-center gap-4'>
-                    <div className='h-32 w-32 bg-[#FFC107] flex rounded-full justify-center items-center font-semibold text-3xl border border-black relative'>
+                    <div className='h-20 w-20 md:h-28 md:w-28 lg:h-32 lg:w-32 bg-[#FFC107] flex rounded-full justify-center items-center font-semibold text-3xl border border-black relative'>
                       {singleProfile.avatar ? 
                         <img src={singleProfile.avatar} alt="profile-pic" className='w-full h-full object-cover rounded-full' /> : 
                         singleProfile.name["0"].toUpperCase()}
-                      <button type='button' onClick={displayAvatarInput} className='absolute bottom-0 right-0 w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center hover:scale-110'>
+                      <button type='button' onClick={displayAvatarInput} className='absolute bottom-[-12px] right-[-12px] md:bottom-0 mdright-0 h-8 w-8 md:w-10 md:h-10 rounded-full bg-gray-200 flex items-center justify-center hover:scale-110'>
                         <FontAwesomeIcon icon={faCamera} className='text-2xl'/>
                       </button>
                     </div>
-                    <p className='text-2xl'>{singleProfile.name}</p>
+                    <p className='text-2xl pt-6 md:pt-0'>{singleProfile.name}</p>
                   </div>
                   <form id='changeAvatarInput' onSubmit={formik.handleSubmit} className='absolute top-28 w-full md:w-96 h-8 border p-1 border-black rounded bg-white flex gap-1 items-center hidden'>
                     <input 
