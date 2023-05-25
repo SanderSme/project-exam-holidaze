@@ -1,3 +1,5 @@
+![Holidaze readme banner](src/assets/readme-img.png)
+
 # Holidaze Accommodation Booking Application
 
 Welcome to the Holidaze Accommodation Booking Application! This application is a modern front-end solution for an accommodation booking site called Holidaze. It provides a user-friendly interface for customers to browse, book, and manage their holiday venue bookings, as well as an admin interface for venue managers to handle venue and booking management.
