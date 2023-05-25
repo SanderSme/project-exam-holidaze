@@ -62,18 +62,18 @@ To install and set up the Holidaze Accommodation Booking Application, follow the
 1. Clone the repository from GitHub:
 
 # Clone the repository from GitHub
-git clone https://github.com/your-username/holidaze-booking-app.git
+`git clone https://github.com/your-username/holidaze-booking-app.git`
 
 
 
 2. Navigate to the project directory:
 
-cd project-exam-holidaze
+`cd project-exam-holidaze`
 
 
 3. Install the project dependencies:
 
-npm install
+`npm install`
 
 
 ## Usage
@@ -82,14 +82,14 @@ To start the Holidaze Accommodation Booking Application, follow these steps:
 
 1. Start the development server:
 
-npm run dev
+`npm run dev`
 
 
 This command will start the application on a local development server.
 
 2. Open your web browser and visit the following URL:
 
-http://localhost:3000
+`http://localhost:3000`
 
 
 The application will now be accessible, and you can begin exploring and interacting with its features.
