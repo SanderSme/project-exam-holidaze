@@ -38,7 +38,7 @@ const BookingCalendar = (props) => {
       const start = new Date(booking.dateFrom);
       const end = new Date(booking.dateTo);
       end.setDate(end.getDate());
-      start.setDate(start.getDate() - 1);
+      start.setDate(start.getDate());
       const disabledRange = { start, end };
       disabledDateRanges.push(disabledRange);
     });

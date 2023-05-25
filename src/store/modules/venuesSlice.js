@@ -52,6 +52,9 @@ const venuesSlice = createSlice({
         SET_BOOK_VENUE: (state, action) => {
             state.bookVenue = action.payload
         },
+        SET_SINGLE_BOOKING: (state, action) => {
+            state.singleBooking = action.payload;
+        },
     }
 })
 
@@ -62,6 +65,7 @@ const {SET_SINGLE_VENUE} = venuesSlice.actions
 const {SET_CREATE_VENUE} = venuesSlice.actions
 const {SET_UPDATE_VENUE} = venuesSlice.actions
 const {SET_BOOK_VENUE} = venuesSlice.actions
+const {SET_SINGLE_BOOKING} = venuesSlice.actions
 const accessToken = localStorage.getItem("accessToken")
 
 export const fetchVenues = () => async (dispatch) => {
@@ -111,6 +115,7 @@ export const fetchSingleBooking = (id) => async (dispatch) => {
 
 
 export const newVenue = (venueData) => async (dispatch) => {
+    dispatch(setLoadingState(true))
     try {
         const response = await fetch('https://nf-api.onrender.com/api/v1/holidaze/venues', {
             method: 'POST',
@@ -122,6 +127,7 @@ export const newVenue = (venueData) => async (dispatch) => {
         })
         const data = await response.json()
         dispatch(SET_CREATE_VENUE(data))
+        dispatch(setLoadingState(false))
         window.location.href = '/';
     } catch(e) {
         dispatch(setError(true, e.message))
@@ -141,7 +147,7 @@ export const updateVenue = (id, venueData) => async (dispatch) => {
         const data = await response.json()
         dispatch(SET_UPDATE_VENUE(data))
         dispatch(setLoadingState(false))
-        window.location.href = "/profile";
+        window.location.href = `/venue/${id}`;
     } catch(e) {
         dispatch(setError(true, e.message))
         dispatch(setLoadingState(false))

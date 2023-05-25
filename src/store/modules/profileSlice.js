@@ -1,4 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { setLoadingState } from "./loaderSlice";
+import { setError } from "./errorSlice"
 
 const profileSlice = createSlice({
     name: 'profile',
@@ -18,6 +20,7 @@ const {SET_SINGLE_PROFILE} = profileSlice.actions
 const accessToken = localStorage.getItem("accessToken")
 
 export const fetchSingleProfile = (name, profileData) => async (dispatch) => {
+    dispatch(setLoadingState(true))
     try {
         const response = await fetch(`https://nf-api.onrender.com/api/v1/holidaze/profiles/${name}?_bookings=true&_venues=true`, {
             method: 'GET',
@@ -28,9 +31,10 @@ export const fetchSingleProfile = (name, profileData) => async (dispatch) => {
             body: JSON.stringify(profileData)
         })
         const data = await response.json()
+        dispatch(setLoadingState(false))
         dispatch(SET_SINGLE_PROFILE(data))
     } catch(e) {
-        console.log(e);
+        dispatch(setError(true, e.message))
     }
 }
 

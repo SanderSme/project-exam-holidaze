@@ -219,7 +219,6 @@ const Profile = () => {
                             </Link>
                             <button type='button' className='absolute top-[-12px] right-[-12px] text-xl text-[#125C85] bg-[#A2D9FF] h-8 w-8 flex items-center justify-center rounded-full' data-id={booking.id} onClick={() => toggleVenueOverlay(booking.id)}><FontAwesomeIcon icon={faEllipsis}/></button>
                             <div className={`venueOverlay w-fit h-fit px-6 py-4 bg-[#125C85] absolute rounded top-6 right-0 text-sm text-white hidden`} data-id={booking.id}>
-                              <Link to="/"> <p className='mb-4 hover:underline'>Edit booking</p></Link>
                               <button type='button' className='deleteBookingBtn hover:underline' onClick={deleteBookingByID} data-id={booking.id}>Delete booking</button>
                             </div>
                           </div>
