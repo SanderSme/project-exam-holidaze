@@ -1,5 +1,5 @@
 import VenueCards from '../VenueCards'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from "react-router-dom"
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
@@ -18,6 +18,10 @@ const SearchResults = () => {
     const pages = [];
     for (let i = 1; i <= Math.ceil(searchResult.length / venuesPerPage); i++) {
         pages.push(i);}
+
+    useEffect(() => {
+        window.scrollTo({top: 0, left: 0, behavior: 'auto'});
+    }, [])
   return (
     <div className='mt-28'>
         <div className='max-w-7xl w-11/12 mx-auto'>

@@ -1,6 +1,10 @@
 import VenueForm from "../VenueForm"
+import { useEffect } from "react"
 
 const NewVenue = () => {
+  useEffect(() => {
+    window.scrollTo({top: 0, left: 0, behavior: 'auto'});
+  }, [])
 
   return (
     <div className="max-w-7xl w-11/12 mx-auto mt-32">

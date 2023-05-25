@@ -50,7 +50,7 @@ const LoginForm = () => {
 
             </div>
             <p id="errorMessage" className="text-red-600 font-semibold"></p>
-            <button type="submit" className="bg-[#FFC107] w-1/3 py-1 rounded shadow place-self-end">Sing in</button>
+            <button type="submit" className="bg-[#FFC107] w-1/3 py-1 rounded shadow place-self-end">Sign in</button>
             <Link to="/register">
                 <p className="text-white underline">Dont have an account?</p>
             </Link>

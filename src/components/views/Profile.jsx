@@ -31,6 +31,10 @@ const Profile = () => {
       }
   }, [dispatch, name])
 
+  useEffect(() => {
+    window.scrollTo({top: 0, left: 0, behavior: 'auto'});
+  }, [])
+
   const formik = useFormik({
     initialValues: {
       avatar: ""
@@ -137,23 +141,23 @@ const Profile = () => {
                   </form>
                   {formik.touched.avatar && formik.errors.avatar ? <div className='text-red-600'>{formik.errors.avatar}</div> : null}
                 </div>
-                <div className="flex gap-8 items-end">
+                <div className="flex justify-between md:justify-start md:gap-8 items-end">
                   {venueManager === "true" ? 
                     <>
                       <button
                         type="button"
-                        className={`text-lg md:text-xl mt-8 ${
-                        activeTab === "venues" ? "font-semibold text-black" : "font-normal text-[#00000070]"
+                        className={`mt-8 pl-4 pr-9 md:px-4 ${
+                        activeTab === "venues" ? "font-semibold text-black py-2 rounded-t-3xl  relative z-30 bg-[#FFC107]" : "relative z-20 font-normal text-[#00000070] bg-[#A2D9FF] py-2 rounded-t-3xl"
                         }`}
                         onClick={() => setActiveTab("venues")}
                       >
                         My Venues ({singleProfile._count.venues})
                       </button>
-                  <div className="w-[1px] h-8 bg-[#00000050]"></div></> : null}
+                    </> : null}
                   <button
                     type="button"
-                    className={`text-lg md:text-xl mt-4 ${
-                    activeTab === "bookings" ? "font-semibold text-black" : "font-normal text-[#00000070]"
+                    className={`mt-4 pr-4 pl-9 md:px-4 ${
+                    activeTab === "bookings" ? "font-semibold text-black bg-[#FFC107] py-2 rounded-t-3xl relative z-30 ml-[-40px]" : "ml-[-40px] relative z-20 font-normal text-[#00000070] bg-[#A2D9FF] py-2 rounded-t-3xl "
                     }`}
                     onClick={() => setActiveTab("bookings")}
                   >

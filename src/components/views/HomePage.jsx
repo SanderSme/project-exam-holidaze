@@ -38,6 +38,10 @@ const HomePage = () => {
         setIsFilterCleared(false)
     }, [venues])
 
+    useEffect(() => {
+        window.scrollTo({top: 0, left: 0, behavior: 'auto'});
+      }, [])
+
     function updateVenuesToDisplay(filteredVenues) {
         setVenuesToDisplay(filteredVenues)
     }
@@ -51,6 +55,24 @@ const HomePage = () => {
         setIsFilterCleared(true);
         document.getElementById('filter').classList.add('hidden')
       }
+
+    function nextPage() {
+        setCurrentPage(currentPage + 1)
+        if (window.innerWidth <= 768) { // Mobile devices have a width less than or equal to 768px
+            window.scrollTo({top: 300, left: 0, behavior: 'smooth'});
+        } else {
+            window.scrollTo({top: 500, left: 0, behavior: 'smooth'});
+        }
+    }
+
+    function prevPage() {
+        setCurrentPage(currentPage - 1)
+        if (window.innerWidth <= 768) { // Mobile devices have a width less than or equal to 768px
+            window.scrollTo({top: 300, left: 0, behavior: 'smooth'});
+        } else {
+            window.scrollTo({top: 500, left: 0, behavior: 'smooth'});
+        }
+    }
 
 
   return (
@@ -80,9 +102,9 @@ const HomePage = () => {
                     </div>
                     <div className="flex justify-between w-full md:w-2/3 lg:w-2/3 mx-auto my-8">
                         <button 
-                            onClick={() => setCurrentPage(currentPage - 1)}
+                            onClick={prevPage}
                             disabled={currentPage === 1}
-                            className="mx-2 w-8 h-8 rounded-full bg-[#125C85] text-white hover:bg-[#A2D9FF] hover:text-black"
+                            className="mx-2 w-8 h-8 rounded-full bg-[#125C85] text-white lg:hover:bg-[#A2D9FF] lg:hover:text-black"
                         >
                             <FontAwesomeIcon icon={faArrowLeft}/>
                         </button>
@@ -91,7 +113,7 @@ const HomePage = () => {
                                 <button
                                     key={page}
                                     onClick={() => setCurrentPage(page)}
-                                    className={`md:mx-1 lg:mx-2 w-6 h-6 md:w-8 md:h-8 rounded-full hover:bg-[#A2D9FF] hover:text-black text-xs md:text-sm ${
+                                    className={`md:mx-1 lg:mx-2 w-6 h-6 md:w-8 md:h-8 rounded-full lg:hover:bg-[#A2D9FF] lg:hover:text-black text-xs md:text-sm ${
                                         currentPage === page && "bg-[#125C85] text-white"
                                     }`}
                                 >
@@ -100,9 +122,9 @@ const HomePage = () => {
                             ))}
                         </div>
                         <button 
-                            onClick={() => setCurrentPage(currentPage + 1)}
+                            onClick={nextPage}
                             disabled={currentPage === totalPages}
-                            className="mx-2 w-8 h-8 rounded-full bg-[#125C85] text-white hover:bg-[#A2D9FF] hover:text-black"
+                            className="mx-2 w-8 h-8 rounded-full bg-[#125C85] text-white lg:hover:bg-[#A2D9FF] lg:hover:text-black"
                             >
                                 <FontAwesomeIcon icon={faArrowRight}/>
                         </button>

@@ -69,7 +69,7 @@ const UpdateVenue = () => {
             description: venueToUpdate?.description || "",
             price: venueToUpdate?.price || 0,
             maxGuests: venueToUpdate?.maxGuests || "",
-            rating: 5,
+            rating: venueToUpdate?.rating || 5,
             meta: {
                 wifi: venueToUpdate?.meta.wifi || false,
                 parking: venueToUpdate?.meta.parking || false,
@@ -95,7 +95,7 @@ const UpdateVenue = () => {
 				media: mediaArray,
 				price: values.price,
 				maxGuests: values.maxGuests,
-				rating: 5,
+				rating: values.rating,
 				meta: {
 					wifi: values.meta.wifi,
 					parking: values.meta.parking,
