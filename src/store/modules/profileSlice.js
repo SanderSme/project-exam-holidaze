@@ -65,7 +65,7 @@ export const logIn = (userData) => {
             })
 }
 
-export const registerUser = (userData) => {
+export const registerUser = (userData, logInData) => {
     fetch('https://nf-api.onrender.com/api/v1/holidaze/auth/register', {
                   method: 'POST',
                   headers: {
@@ -79,8 +79,8 @@ export const registerUser = (userData) => {
                   }
                   return response.json()
               })
-              .then(data => {
-                window.location.href = '/login';
+              .then(() => {
+                  logIn(logInData)
               })
               .catch(error => {
                 document.getElementById('errorMessage').innerHTML = "There was an Error, pleace try again"

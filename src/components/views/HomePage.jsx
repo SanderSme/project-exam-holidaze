@@ -44,6 +44,7 @@ const HomePage = () => {
 
     function updateVenuesToDisplay(filteredVenues) {
         setVenuesToDisplay(filteredVenues)
+        setIsFilterCleared(false)
     }
 
     function displayFilter() {

@@ -1,9 +1,10 @@
 import { useState, useEffect} from "react"
-
+import { fetchVenues } from "../store/modules/venuesSlice";
+import { useDispatch } from "react-redux";
 
 const SearchBar = ({setResults}) => {
     const [input, setInput] = useState("")
-    
+    const dispatch = useDispatch()
     useEffect(() => {
         const overlay = document.getElementById("overlay");
         overlay.addEventListener("click", removeOverlay);

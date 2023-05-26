@@ -1,7 +1,7 @@
 import { useFormik } from "formik"
 import * as Yup from 'yup'
 import { Link } from "react-router-dom"
-import { registerUser } from "../store/modules/profileSlice"
+import { registerUser, logIn } from "../store/modules/profileSlice"
 
 const validationSchema = Yup.object().shape({
     name: Yup.string().min(3, "Must be 3 chars or more").max(50, "Can not be longer than 50 chars").matches(/^\S*$/, 'No spaces allowed in name').required('Required'),
@@ -31,8 +31,12 @@ const RegisterForm = () => {
                 avatar: values.avatar,
                 venueManager: values.venueManager === "yes",
                 password: values.password
-              };
-                registerUser(userData)
+            };
+            const logInData = {
+                email: values.email,
+                password: values.password
+            }
+            registerUser(userData, logInData)
         }
     })
   return (

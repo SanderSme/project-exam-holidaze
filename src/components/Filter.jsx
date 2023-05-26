@@ -6,8 +6,7 @@ const Filter = (props) => {
         initialValues: {
             minPrice: 1,
             maxPrice: 1,
-            minGuests: 1,
-            maxGuests: 1,
+            guests: 1,
             wifi: false,
             parking: false,
             breakfast: false,
@@ -17,8 +16,7 @@ const Filter = (props) => {
             const filterData = {
             minPrice: values.minPrice,
             maxPrice: values.maxPrice,
-            minGuests: values.minGuests,
-            maxGuests: values.maxGuests,
+            guests: values.guests,
             wifi: values.wifi,
             parking: values.parking,
             breakfast: values.breakfast,
@@ -32,8 +30,7 @@ const Filter = (props) => {
                     document.getElementById('filter').classList.add('hidden')
                     if (venue.price < filterData.minPrice ||
                         venue.price > filterData.maxPrice ||
-                        venue.maxGuests < filterData.minGuests ||
-                        venue.maxGuests > filterData.maxGuests
+                        venue.maxGuests < filterData.guests
                     ) {
                         return false;
                     } 
@@ -67,7 +64,7 @@ const Filter = (props) => {
     <div id='filter' className='absolute h-fit w-full md:w-96 p-8 bg-gradient-to-b from-[#125C85] to-[#307095] rounded right-0 top-12 z-30 text-white hidden'>
     <form onSubmit={formik.handleSubmit} className='flex flex-col'>
             <p>Price:</p>
-            <div className='flex w-full justify-around mb-4'>
+            <div className='flex w-full justify-between mb-4'>
                 <div className='flex flex-col w-1/3'>
                     <input type="number" name='minPrice' id='minPrice' className='text-black rounded p-1' min="0" max={formik.values.maxPrice} onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
@@ -81,20 +78,11 @@ const Filter = (props) => {
                     <label htmlFor="maxPrice">Max $</label>
                 </div>
             </div>
-            <p>Max guests:</p>
-            <div className='flex w-full justify-around mb-4'>
-                <div className='flex flex-col w-1/3'>
-                    <input type="number" name='minGuests' id='minGuests' className='text-black rounded p-1' min="1" max={formik.values.maxGuests} onChange={formik.handleChange}
+            <div className='flex flex-col w-1/3 gap-4 mb-4'>
+                    <label htmlFor="guests">Guests:</label>
+                    <input type="number" name='guests' id='guests' className='text-black rounded p-1' min="1" onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        value={formik.values.minGuests}/>
-                    <label htmlFor="minGuests">Min</label>
-                </div>
-                <div className='flex flex-col w-1/3'>
-                    <input type="number" id='maxGuests' name='maxGuests' className='text-black rounded p-1' min={formik.values.minGuests} onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.maxGuests}/>
-                    <label htmlFor="maxGuests">Max</label>
-                </div>
+                        value={formik.values.guests}/>
             </div>
             <div className="flex flex-col gap-4 mb-8">
                 <div>
