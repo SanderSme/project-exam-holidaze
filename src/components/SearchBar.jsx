@@ -15,7 +15,9 @@ const SearchBar = ({setResults}) => {
         value = value.toLowerCase();
         fetch('https://nf-api.onrender.com/api/v1/holidaze/venues').then((response) => response.json()).then((json) => {
             const searchResults = json.filter((venue) => {
-                return value && venue && venue.name && venue.name.toLowerCase().includes(value)
+                const nameMatch = value && venue && venue.name && venue.name.toLowerCase().includes(value);
+                const cityMatch = value && venue && venue.location.city && venue.location.city.toLowerCase().includes(value);
+                return nameMatch || cityMatch;
             })
             setResults(searchResults)
             localStorage.setItem('searchResults', JSON.stringify(searchResults))

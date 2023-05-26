@@ -7,6 +7,7 @@ import NewVenue from "../components/views/NewVenue"
 import Profile from "../components/views/Profile"
 import UpdateVenue from "../components/views/UpdateVenue"
 import SearchResults from "../components/views/SearchResults"
+import PageNotFound from "../components/views/PageNotFound"
 
 const Router = () => {
   return (
@@ -20,6 +21,7 @@ const Router = () => {
             <Route path="/login" element={<Login/>}/>
             <Route path="/update/:id" element={<UpdateVenue/>}/>
             <Route path="/search-results" element={<SearchResults/>}/>
+            <Route path="*" element={<PageNotFound/>}/>
         </Routes>
     </>
   )

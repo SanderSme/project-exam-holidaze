@@ -17,7 +17,10 @@ const SearchResults = ({results}) => {
                         </div>
                         <div className="w-1/2 h-full flex flex-col justify-between">
                             <h2 className="text-sm">{venue.name}</h2>
-                            <p className="text-xs">Starting from ${venue.price}</p>
+                            <div className="text-xs">
+                                {venue.location.city !== "Unknown" ? <p className="mb-2">City: {venue.location.city}</p> : null}
+                                <p>Starting from ${venue.price}</p>
+                            </div>
                         </div>
                     </div>
                 </NavLink>
