@@ -9,8 +9,7 @@ import './NavBarAnimation.css'
 import SearchBar from '../SearchBar'
 import { useDispatch } from 'react-redux'
 import { fetchVenues } from '../../store/modules/venuesSlice'
-import { useState, useEffect} from 'react'
-import SearchResultsList from '../SearchResultList'
+import { useEffect} from 'react'
 import { NavLink } from 'react-router-dom'
 import { clearStorrage } from '../../utils/Storrage'
 
@@ -27,7 +26,6 @@ const Header = () => {
       useEffect(() => {
           dispatch(fetchVenues())
       }, [dispatch])
-      const [results, setResults] = useState([])
 
       const accessToken = localStorage.getItem('accessToken')
       const userName = localStorage.getItem('userName')
@@ -70,8 +68,7 @@ const Header = () => {
                   <img src={Logo} alt="logo" className='h-full absolute md:relative left-[50%] translate-x-[-50%] md:left-auto md:translate-x-0'/>
                 </NavLink>
                 <div className='flex items-center gap-2'>
-                <SearchBar setResults={setResults}/>
-                <SearchResultsList results={results}/>
+                <SearchBar/>
                 {accessToken ? (
                   <>
               <NavLink to={"/profile"} className="flex items-center gap-2">

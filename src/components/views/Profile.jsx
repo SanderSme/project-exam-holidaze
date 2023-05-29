@@ -154,7 +154,7 @@ const Profile = () => {
                         My Venues ({singleProfile._count.venues})
                       </button>
                     </> : null}
-                  <button
+                    {venueManager === "true" ? <button
                     type="button"
                     className={`mt-4 pr-4 pl-9 md:px-4 ${
                     activeTab === "bookings" ? "font-semibold text-black bg-[#FFC107] py-2 rounded-t-3xl relative z-30 ml-[-40px]" : "ml-[-40px] relative z-20 font-normal text-[#00000070] bg-[#A2D9FF] py-2 rounded-t-3xl "
@@ -162,7 +162,14 @@ const Profile = () => {
                     onClick={() => setActiveTab("bookings")}
                   >
                     My Bookings ({singleProfile._count.bookings})
-                  </button>
+                  </button> : <button
+                    type="button"
+                    className="mt-4 pr-4 pl-9 md:px-4 font-semibold text-black bg-[#FFC107] py-2 rounded-t-3xl relative z-30"
+                    onClick={() => setActiveTab("bookings")}
+                  >
+                    My Bookings ({singleProfile._count.bookings})
+                  </button>}
+                  
                 </div>
                 <div className='w-full h-[1px] bg-gray-400 mb-8'></div>
                 <div className='flex flex-wrap justify-center md:justify-start md:gap-6'>

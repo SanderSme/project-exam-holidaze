@@ -11,6 +11,7 @@ const venuesSlice = createSlice({
         topRatedHouses:[],
         createVenue: null,
         bookVenue: null,
+        searchVenue: ''
     },
     reducers: {
         SET_VENUES: (state, action) => {
@@ -55,17 +56,24 @@ const venuesSlice = createSlice({
         SET_SINGLE_BOOKING: (state, action) => {
             state.singleBooking = action.payload;
         },
+        SET_SEARCH_VENUE: (state, action) => {
+            state.searchVenue = action.payload
+        }
     }
 })
 
 export default venuesSlice.reducer
 
-const {SET_VENUES} = venuesSlice.actions
-const {SET_SINGLE_VENUE} = venuesSlice.actions
-const {SET_CREATE_VENUE} = venuesSlice.actions
-const {SET_UPDATE_VENUE} = venuesSlice.actions
-const {SET_BOOK_VENUE} = venuesSlice.actions
-const {SET_SINGLE_BOOKING} = venuesSlice.actions
+export const {
+    SET_VENUES,
+    SET_SINGLE_VENUE,
+    SET_CREATE_VENUE,
+    SET_UPDATE_VENUE,
+    SET_BOOK_VENUE,
+    SET_SINGLE_BOOKING,
+    SET_SEARCH_VENUE
+    } = venuesSlice.actions
+
 const accessToken = localStorage.getItem("accessToken")
 
 export const fetchVenues = () => async (dispatch) => {
