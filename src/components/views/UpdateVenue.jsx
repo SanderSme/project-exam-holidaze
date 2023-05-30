@@ -5,6 +5,7 @@ import * as Yup from 'yup'
 import { fetchSingleVenue, updateVenue} from '../../store/modules/venuesSlice'
 import { useParams } from "react-router-dom"
 import { setLoadingState } from "../../store/modules/loaderSlice"
+import { Link } from "react-router-dom"
 
 const validationSchema = Yup.object().shape({
 	name: Yup.string()
@@ -49,6 +50,7 @@ const UpdateVenue = () => {
     const dispatch = useDispatch()
     let {id} = useParams()
     const venueToUpdate = useSelector((state) => state.venues.singleVenue)
+    const userName = localStorage.getItem('userName')
     useEffect(() => {
         if(!venueToUpdate) {
             dispatch(fetchSingleVenue(id))
@@ -161,8 +163,7 @@ const UpdateVenue = () => {
    
 
     <div className="max-w-7xl w-11/12 mx-auto mt-32">
-        {venueToUpdate && 
-            <>
+        {venueToUpdate && venueToUpdate.owner.name === userName ? <>
                 <div>
                     <h1 className='text-2xl mt-8'>Update Venue</h1>
                 </div>
@@ -320,7 +321,12 @@ const UpdateVenue = () => {
                     </div>
                     <button type="submit" className="bg-[#FFC107] w-full md:w-1/2 lg:w-1/3 py-1 rounded shadow place-self-end text-black mt-4 mb-8">Save changes</button>
                 </form>
-            </>
+            </> : 
+            <div className="text-center mt-12 mb-80">
+                <p className="mb-4 text-lg">You are not the owner of this venue</p>
+                <Link to={"/"} className='underline text-blue-600 italic'>Back to Homepage</Link>
+            </div>
+            
         } 
     </div>
   )

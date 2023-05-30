@@ -120,7 +120,7 @@ const SingleVenue = () => {
                                     <h1 className='text-2xl mt-4'>Availability</h1>
                                     <div className='w-full h-[1px] bg-gray-400 mb-8'></div>
                                     <div className='flex justify-center w-full mt-12 mb-24'>
-                                        <p className='text-xl italic text-gray-600'><Link to={'/login'} className='underline text-blue-600'>Sing in</Link> to make reservation</p>
+                                        <p className='text-xl italic text-gray-600'><Link to={'/login'} className='underline text-blue-600'>Sign in</Link> to make reservation</p>
                                     </div>
                                 </div>
                             }
