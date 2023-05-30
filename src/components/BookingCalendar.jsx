@@ -130,7 +130,7 @@ const BookingCalendar = (props) => {
               <p className='italic'>Dates:</p>
               <div className="italic md:flex md:gap-2 lg:block lg:gap-0">
                 <p>{startDate?.toLocaleDateString()}</p>
-                <p>To</p>
+                {startDate && <p>To</p>}
                 <p>{endDate?.toLocaleDateString()}</p>
               </div>
               <div className='flex flex-col items-end'>

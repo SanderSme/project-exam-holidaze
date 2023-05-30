@@ -56,16 +56,15 @@ const VenueInformation = (props) => {
                 <p className='mb-2'>{props.address}</p>
                 <div className='flex w-full justify-between'>
                     <div>
-                        <p className='mb-2'>{props.city}</p>
-                        <p>{props.country}</p>
+                        {props.city && props.city !== "Unknown" ? <p className='mb-2'>{props.city}</p> : null}
+                        {props.country && props.country !== "Unknown" ? <p>{props.country}</p> : null}
                     </div>
                     <div>
-                        <p className='mb-2'>{props.zip}</p>
-                        <p>{props.continent}</p>
+                        {props.zip && props.zip !== "Unknown" ? <p className='mb-2'>{props.zip}</p> : null}
+                        {props.continent && props.continent !== "Unknown" ? <p>{props.continent}</p> : null}
                     </div>
                 </div>
             </div></> : null}
-            
         </div>
   )
 }
