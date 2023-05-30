@@ -41,8 +41,7 @@ Welcome to the Holidaze Accommodation Booking Application! This application is a
    - Venue managers can delete venues they are responsible for.
 
 3. Booking Management:
-   - Venue managers can view and manage bookings for their venues.
-   - Venue managers can mark bookings as confirmed or canceled.
+   - Venue managers can view bookings for their venues.
 
 ## Technologies Used
 
