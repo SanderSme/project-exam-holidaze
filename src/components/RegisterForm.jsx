@@ -27,13 +27,13 @@ const RegisterForm = () => {
         onSubmit: (values) => {
             const userData = {
                 name: values.name,
-                email: values.email,
+                email: values.email.toLowerCase(),
                 avatar: values.avatar,
                 venueManager: values.venueManager === "yes",
                 password: values.password
             };
             const logInData = {
-                email: values.email,
+                email: values.email.toLowerCase(),
                 password: values.password
             }
             registerUser(userData, logInData)
@@ -55,7 +55,7 @@ const RegisterForm = () => {
             </div>
             <div>
                 <label htmlFor="email" className="text-white">Email:</label>
-                <input type="text"
+                <input type="email"
                         name="email"
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}

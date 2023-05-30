@@ -17,7 +17,7 @@ const LoginForm = () => {
         validationSchema,
         onSubmit: (values) => {
             const userData = {
-                email: values.email,
+                email: values.email.toLowerCase(),
                 password: values.password
             };
             logIn(userData)
@@ -28,7 +28,7 @@ const LoginForm = () => {
         <form onSubmit={formik.handleSubmit} className="flex flex-col gap-4">
             <div>
                 <label htmlFor="email" className="text-white">Email:</label>
-                <input type="text"
+                <input type="email"
                         name="email"
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
