@@ -96,7 +96,6 @@ export const fetchSingleVenue = (id) => async (dispatch) => {
         const data = await response.json()
         dispatch(SET_SINGLE_VENUE(data))
         dispatch(setLoadingState(false))
-        console.log(data);
     } catch(e) {
         dispatch(setLoadingState(false))
         dispatch(setError(true, e.message))

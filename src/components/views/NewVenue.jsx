@@ -7,7 +7,6 @@ const NewVenue = () => {
     window.scrollTo({top: 0, left: 0, behavior: 'auto'});
   }, [])
   const venueManager = localStorage.getItem('venueManager')
-  console.log(venueManager);
 
   return (
     <div className="max-w-7xl w-11/12 mx-auto mt-32">
