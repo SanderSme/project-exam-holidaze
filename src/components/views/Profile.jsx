@@ -212,7 +212,7 @@ const Profile = () => {
                                 <div className='flex flex-col h-full md:h-28 justify-between w-1/2 md:w-full'>
                                   <div>
                                     {booking.venue.city !== "Unknown" && booking.venue.city ? <p className="text-sm"><span className="text-gray-500">City: </span>{booking.venue.location}</p> : null}
-                                    <p className='font-semibold'>{booking.venue.name}</p>  
+                                    <p className='font-semibold'>{booking.venue.name.length > 30 ? `${booking.venue.name.substring(0, 30)}...` : booking.venue.name}</p>  
                                   </div>
                                   <div className='flex flex-col gap-2 text-sm'>
                                     <p>
