@@ -25,7 +25,7 @@ const SearchBar = () => {
         document.getElementById("searchList").classList.remove("hidden")
         if(e.target.value === "") {
             document.getElementById("overlay").classList.add('hidden')
-        document.getElementById("searchList").classList.add("hidden")
+            document.getElementById("searchList").classList.add("hidden")
         }
         dispatch(SET_SEARCH_VENUE(e.target.value))
         fetchData(e.target.value)
@@ -46,12 +46,11 @@ const SearchBar = () => {
     const removeOverlay = () => {
         document.getElementById("overlay").classList.add("hidden")
         document.getElementById("searchList").classList.add("hidden")
-        setInput("")
     }
 
   return (
         <>
-            <form onSubmit={handleSubmit} className='h-[30px] w-[300px] sm:w-[350px] lg:w-[410px] bg-[#F5F9FF] rounded absolute left-[50%] translate-x-[-50%] top-20 md:top-auto flex items-center p-1 z-40'>
+            <form onSubmit={handleSubmit} className='h-[30px] w-[300px] sm:w-[350px] lg:w-[410px] bg-[#F5F9FF] rounded absolute left-[50%] translate-x-[-50%] top-[75px] md:top-auto flex items-center p-1 z-40'>
                 <input type="text" name="search" value={searchQuery} onChange={handleChange} className='w-11/12 h-full bg-[#F5F9FF] rounded mr-2' />
                 <button type='submit' disabled={searchQuery === ""} className='h-[24px] w-[92px] bg-[#125C85] rounded text-white'>Search</button>
             </form>
